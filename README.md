@@ -1,2 +1,0 @@
-# survival-game
-survival game

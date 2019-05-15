@@ -15,8 +15,6 @@ class data:
 
 	 file = open("data/data.txt", 'w')
 	 file.write("hello world") 
-	 when this is hosted on heroku, functions can be
-	 replaced easily
 	'''
 	#functions to add and modify data
 	def setPlayer(self, chat_id, data):

@@ -2,4 +2,4 @@
 from data_handler import data
 
 dab = data()
-print(dab.isWorld('ketheres_elyion'))
+print(dab.isWorld('test'))
