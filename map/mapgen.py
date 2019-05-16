@@ -38,7 +38,7 @@ def generate_fractal_noise_2d(shape, res, octaves=1, persistence=0.5):
     
 def gen_map(map_name):
     size = 1024
-    from rendermap import generate_map
+    from map.rendermap import generate_map
     print('generating perlin noise...')
     heightmap = generate_fractal_noise_2d((size, size), (8, 8), 8)
     print('height map... done')
@@ -50,3 +50,6 @@ def gen_map(map_name):
     print('random map... done')
 
     generate_map(heightmap, precipmap, temp, random, map_name)
+
+if __name__ == "__main__":
+    print('please do NOT call mapgen.py directly. instead to test mapgen, cd to the parent survival-game folder and run run_mapgen.py. This is because a shit ton of stuff breaks if you call mapgen.py directly.')

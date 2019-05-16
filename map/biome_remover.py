@@ -16,7 +16,7 @@ def rm_small_biomes(b_list, raw_data):
 def get_config():
 	import configparser
 	config = configparser.ConfigParser()
-	config.readfp(open(r'biomes.cfg'))
+	config.readfp(open(r'map/biomes.cfg'))
 	cfg = [0]
 	cfg.append(int(config.get('min_size', 'deep_ocean_min')))
 	cfg.append(int(config.get('min_size', 'shallow_ocean_min')))

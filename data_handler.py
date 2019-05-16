@@ -1,4 +1,5 @@
-class data:
+class database:
+	import pickle
 	'''
 	 - DATA STRUCTURE:
 	 Each player is part of ONE world only.
@@ -24,6 +25,10 @@ class data:
 		pfile.close()
 
 	def setWorld(self, data, world_name):
+		import pickle
+		pfile = open('data/worlds/' + str(world_name) + '.txt','wb')
+		pickle.dump(data, pfile)
+		pfile.close()
 		pass
 
 	def updateWorld(self, data, world_name):

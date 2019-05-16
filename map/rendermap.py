@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-from classes import biome
+from map.classes import biome
 
 def get_biome_type(h, p, t, r):
     #recieves h, t, m, r, returns biome ID 
@@ -57,7 +57,7 @@ def get_biome_type(h, p, t, r):
         return 16 #mountain
 
 def display(biomelist, filename):
-    from classes import colours
+    from map.classes import colours
     data = np.zeros((1024, 1024, 3), dtype=int)
     id_colours = colours()
     for i in range(0, len(biomelist)):
@@ -95,7 +95,7 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
             data[i, j] =  get_biome_type(height[i, j], moisture[i, j], (temp_sin + (temperature[i,j] * 0.25)), random[i,j])
     #generate rivers
     print('building terrain... done')
-    from waterbodies import gen_rivers
+    from map.waterbodies import gen_rivers
     
     positive_height = (height - np.min(height))/np.ptp(height)
     rivers = gen_rivers(positive_height)
@@ -106,18 +106,17 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
     #make into biome list
 
     print('cleaning up the map...')
-    from biome_finder import make_list
+    from map.biome_finder import make_list
     biome_list = make_list(data)
     #delete small biomes
 
-    from biome_remover import rm_small_biomes
+    from map.biome_remover import rm_small_biomes
     biome_list = rm_small_biomes(biome_list, data)
     print('removing small biomes... done')
     #save biome_list into file
-    import pickle
-    file = open('../data/worlds/' + name + '.txt','wb') 
-    pickle.dump(biome_list, file)
-    file.close()
+    from data_handler import database
+    db = database()
+    db.setWorld(biome_list, name)
     print('saving map to file... done')
 
     print('displaying map...')

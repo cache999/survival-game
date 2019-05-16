@@ -1,7 +1,7 @@
 import sys
 import time
-from data_handler import data
-db = data()
+from data_handler import database
+db = database()
 class char:
 	pass
 class handler:

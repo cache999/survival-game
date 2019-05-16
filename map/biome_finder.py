@@ -3,7 +3,7 @@ import numpy as np
 def make_list(data):
 	s = generate_binary_structure(2,2)
 	dlen = data.shape[0]
-	from classes import colours, biome
+	from map.classes import colours, biome
 	b_len = len(colours()) #0s are useless
 	biome_list = np.array([])
 	for b in range(1, b_len):
