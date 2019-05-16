@@ -36,12 +36,9 @@ def generate_fractal_noise_2d(shape, res, octaves=1, persistence=0.5):
         amplitude *= persistence
     return noise
     
-if __name__ == '__main__':
-    from spinner import Spinner
-    spinner = Spinner()
+def gen_map(map_name):
     size = 1024
     from rendermap import generate_map
-    spinner.start()
     print('generating perlin noise...')
     heightmap = generate_fractal_noise_2d((size, size), (8, 8), 8)
     print('height map... done')
@@ -52,5 +49,4 @@ if __name__ == '__main__':
     random = generate_fractal_noise_2d((size, size), (8, 8), 8)
     print('random map... done')
 
-    generate_map(heightmap, precipmap, temp, random, 'map')
-    spinner.stop()
+    generate_map(heightmap, precipmap, temp, random, map_name)

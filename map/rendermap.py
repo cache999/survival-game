@@ -5,7 +5,6 @@ from classes import biome
 
 def get_biome_type(h, p, t, r):
     #recieves h, t, m, r, returns biome ID 
-
     if (h < 0 and t < -0.5):
         return 5 #ice
     if (h < -0.3):
@@ -89,8 +88,6 @@ def display_sequentially(biomelist):
         ax.imshow(data, aspect='equal')
         plt.savefig('biome_' + str(i) + '.png', dpi=1024, vmin=0,vmax=255)
 
-    
-
 
 def append_rivers(data, rivers):
     c = 0
@@ -124,15 +121,22 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
     data = append_rivers(data, rivers)
     print('adding rivers to map... done')
     #make into biome list
+
+    print('cleaning up the map...')
     from biome_finder import make_list
     biome_list = make_list(data)
-    print('parsing map data... done')
     #delete small biomes
 
     from biome_remover import rm_small_biomes
     biome_list = rm_small_biomes(biome_list, data)
     print('removing small biomes... done')
-    #display using biome list
+    #save biome_list into file
+    import pickle
+    file = open('../data/worlds/' + name + '.txt','wb') 
+    pickle.dump(biome_list, file)
+    file.close()
+    print('saving map to file... done')
+
     print('displaying map...')
     display(biome_list, 'map')
 
