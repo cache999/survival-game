@@ -71,23 +71,6 @@ def display(biomelist, filename):
     ax.imshow(data, aspect='equal')
     plt.savefig(filename, dpi=1024, vmin=0,vmax=255)
 
-def display_sequentially(biomelist):
-    #debug
-    from classes import colours
-    id_colours = colours()
-    for i in range(0, len(biomelist)):
-        data = np.zeros((1024, 1024, 3), dtype=int)
-        for j in range(0, len(biomelist[i].coords)):
-
-            data[biomelist[i].coords[j][0], biomelist[i].coords[j][1]] = id_colours[biomelist[i].type]
-        fig = plt.figure()
-        fig.set_size_inches((1,1))
-        ax = plt.Axes(fig, [0., 0., 1., 1.])
-        ax.set_axis_off()
-        fig.add_axes(ax)
-        ax.imshow(data, aspect='equal')
-        plt.savefig('biome_' + str(i) + '.png', dpi=1024, vmin=0,vmax=255)
-
 
 def append_rivers(data, rivers):
     c = 0
