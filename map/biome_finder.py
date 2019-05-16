@@ -1,5 +1,6 @@
 from scipy.ndimage import label, generate_binary_structure
 import numpy as np
+#inefficient algo!
 def make_list(data):
 	s = generate_binary_structure(2,2)
 	dlen = data.shape[0]
@@ -13,15 +14,9 @@ def make_list(data):
 		lb_data, num_features = label(d.tolist(), structure=s)
 		b_array = np.empty(num_features, dtype=object)
 		#add biome objects to num_features
-		for i in range(0, num_features):
-			b_array[i] = biome(b)
-		#iterate through the array, add the shit
-		for i in range(0, dlen):
-			for j in range(0, dlen):
-				if (lb_data[i, j] != 0):
-					b_array[lb_data[i, j] - 1].addc([i, j])
+		for i in range(1, num_features + 1):
+			b_array[i-1] = biome(b)
+			b_array[i-1].setc(np.argwhere(lb_data==i).tolist())
 		biome_list = np.concatenate((biome_list, b_array))
-		print('finished biome ' + str(b) + ' out of ' + str(b_len))
+		print('finished biome ' + str(b) + ' out of ' + str(b_len-1))
 	return biome_list
-
-
