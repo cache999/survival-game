@@ -33,7 +33,7 @@ class handler:
 			else:
 				send(cid, 'fuck you, ' + psmg[2] +' isnt an existing world')
 	def newworld(self):
-		pass
+		
 
 
 
@@ -53,7 +53,7 @@ try:
 except:
 	cid = "chatid"
 	sender = "123test"
-	msg = "!newcharacter benzou ketheres_elyion"
+	msg = "!newcharacter f f"
 	psmg = msg.split(' ')
 
 
