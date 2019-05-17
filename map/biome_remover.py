@@ -21,8 +21,6 @@ def rm_small_biomes(b_list, tagged_data):
 		if (b_list[i].type == 0):
 			mask[i] = False
 	b_list = b_list[mask]
-	print(str(original - len(b_list)) + ' biomes yeeted out of existence')
-
 	return b_list
 
 

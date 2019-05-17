@@ -50,6 +50,7 @@ def gen_map(map_name):
     print('random map... done')
 
     generate_map(heightmap, precipmap, temp, random, map_name)
+    return
 
 if __name__ == "__main__":
     print('please do NOT call mapgen.py directly. instead to test mapgen, cd to the parent survival-game folder and run run_mapgen.py. This is because a shit ton of stuff breaks if you call mapgen.py directly.')

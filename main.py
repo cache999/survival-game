@@ -54,13 +54,16 @@ class handler:
 			else:
 				send(cid, 'fuck you, ' + psmg[2] +' isnt an existing world')
 	def newworld(self, psmg, sender, cid):
-		if (len(psmg) > 1):
-			from map.mapgen import gen_map
-			gen_map(psmg[1])
+		if (sender == '108791316110923750592' or sender == '109696714510497833957'):
+			if (len(psmg) > 1):
+				send(cid, 'Generating world...')
+				from map.mapgen import gen_map
+				gen_map(psmg[1])
+			else:
+				send(cid, 'Please provide a name.')
+				return
 		else:
-			send(cid, 'Please provide a name!')
-			return
-		send(cid, 'The world has been created!')
+			send(cid, 'You do not have permission to execute this command.')
 
 
 

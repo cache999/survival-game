@@ -70,6 +70,7 @@ def display(biomelist, filename):
     fig.add_axes(ax)
     ax.imshow(data, aspect='equal')
     plt.savefig(filename, dpi=1024, vmin=0,vmax=255)
+    return
 
 
 def append_rivers(data, rivers):
@@ -98,22 +99,25 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
     from map.waterbodies import gen_rivers
     
     positive_height = (height - np.min(height))/np.ptp(height)
-    rivers = gen_rivers(positive_height)
-    print('creating rivers... done')
+    #rivers = gen_rivers(positive_height)
+    #print('creating rivers... done')
     #append rivers
-    data = append_rivers(data, rivers)
-    print('adding rivers to map... done')
+    #data = append_rivers(data, rivers)
+    #print('adding rivers to map... done')
     #make into biome list
 
     print('cleaning up the map...')
-    from map.biome_finder import make_list
+    from map.biome_finder import make_list, make_tagged_data
     biome_list = make_list(data)
     #delete small biomes
 
+    tagged_data = make_tagged_data(biome_list)
+
     from map.biome_remover import rm_small_biomes
-    biome_list = rm_small_biomes(biome_list, data)
+    biome_list = rm_small_biomes(biome_list, tagged_data)
     print('removing small biomes... done')
     #save biome_list into file
+    
     from data_handler import database
     db = database()
     db.setWorld(biome_list, name)
@@ -121,6 +125,7 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
 
     print('displaying map...')
     display(biome_list, 'map')
+    return
 
 
 

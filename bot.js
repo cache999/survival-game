@@ -12,7 +12,6 @@ var client = new Client();
 
 // receive chat message events
 client.on('chat_message', function(ev) {
-
   var msg = {
   	cid: ev.conversation_id.id,
   	sender: ev.sender_id.chat_id, 
@@ -20,8 +19,7 @@ client.on('chat_message', function(ev) {
   	parsed_message: ev.chat_message.message_content.segment[0].text.split(' '),
   };
   if (msg.parsed_message[0].split('!').length === 2 && msg.parsed_message[0].split('!')[0] === '') {
-  	try {
-      console.log('recieved msg')
+    try {
       const pythonProcess = spawn('python',["/Users/student/desktop/github/survival-game/main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
       pythonProcess.stdout.on('data', (data) => {
         send = data.toString().split('|')
