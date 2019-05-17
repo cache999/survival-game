@@ -1,12 +1,13 @@
 class biome:
-	def __init__(self, type_):
-		self.type = type_
-		self.coords = []
-	def addc(self, coord):
-		self.coords.append(coord)
+    import numpy as np
+    def __init__(self, type_):
+        self.type = type_
+        self.coords = -1
+    def setc(self, coords):
+        self.coords = (coords)
 
 def colours(): #mainly an easy way to modify colours
-	return [
+    return [
     [0, 0, 0],
     [0, 163, 204],
     [0, 184, 230],
