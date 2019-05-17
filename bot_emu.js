@@ -10,13 +10,13 @@ var client = {
 var msg = {
 	cid: "chatid",
 	sender: "123456789",
-	message: "!newcharacter f ketheres_elyion",
+	message: "!newworld",
 	psmg: -1
 }
 
 msg.psmg = msg.message.split(' ');
 
-const pythonProcess = spawn('python',["/Users/student/desktop/survival_game/main.py", msg.cid, msg.sender, msg.psmg, msg.message]);
+const pythonProcess = spawn('python',["/Users/Student/Desktop/Github/survival-game/main.py", msg.cid, msg.sender, msg.psmg, msg.message]);
 //cid, sender, message, psmg
 
 pythonProcess.stdout.on('data', (data) => {

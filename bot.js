@@ -21,7 +21,8 @@ client.on('chat_message', function(ev) {
   };
   if (msg.parsed_message[0].split('!').length === 2 && msg.parsed_message[0].split('!')[0] === '') {
   	try {
-      const pythonProcess = spawn('python',["/Users/student/desktop/survival_game/main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
+      console.log('recieved msg')
+      const pythonProcess = spawn('python',["/Users/student/desktop/github/survival-game/main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
       pythonProcess.stdout.on('data', (data) => {
         send = data.toString().split('|')
         client.sendchatmessage(send[0], [[0,send[1]]])
