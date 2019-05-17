@@ -16,7 +16,16 @@ def make_list(data):
 		#add biome objects to num_features
 		for i in range(1, num_features + 1):
 			b_array[i-1] = biome(b)
-			b_array[i-1].setc(np.argwhere(lb_data==i).tolist())
+			b_array[i-1].setc(np.argwhere(lb_data==i))
 		biome_list = np.concatenate((biome_list, b_array))
 		print('finished biome ' + str(b) + ' out of ' + str(b_len-1))
 	return biome_list
+
+def make_tagged_data(b_list):
+	from map.classes import biome
+	tagged_data = np.zeros((1024, 1024), dtype=object)
+	for i in range(0, len(b_list)):
+		for j in range(0, len(b_list[i].coords)):
+			tagged_data[b_list[i].coords[j][0], b_list[i].coords[j][1]] = i
+
+	return tagged_data
