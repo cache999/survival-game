@@ -99,11 +99,11 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
     from map.waterbodies import gen_rivers
     
     positive_height = (height - np.min(height))/np.ptp(height)
-    #rivers = gen_rivers(positive_height)
-    #print('creating rivers... done')
+    rivers = gen_rivers(positive_height)
+    print('creating rivers... done')
     #append rivers
-    #data = append_rivers(data, rivers)
-    #print('adding rivers to map... done')
+    data = append_rivers(data, rivers)
+    print('adding rivers to map... done')
     #make into biome list
 
     print('cleaning up the map...')
@@ -124,7 +124,7 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
     print('saving map to file... done')
 
     print('displaying map...')
-    display(biome_list, 'map')
+    display(biome_list, 'data/worlds/' + str(name))
     return
 
 
