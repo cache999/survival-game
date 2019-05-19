@@ -25,8 +25,9 @@ class promise:
 class char:
 	pass
 
+
 class handler:
-	def newcharacter(self, psmg, sender, cid): 
+	def join(self, psmg, sender, cid): 
 		#create new char TODO: add confirmation
 		if (len(psmg) == 1):
 			send(cid, 'fuck you , please specify name and world')
@@ -49,8 +50,10 @@ class handler:
 				character.health = 100
 				character.exhaustion = 0 #int between 0 and 100
 				character.age = 0
-				db.setPlayer(sender, copy.deepcopy(character))
+				spawnpoint = db.spawn_player(character.world)
+				db.setPlayer(sender, copy.deepcopy([character, [spawnpoint]])) #char info, unmasked coordinates
 				send(cid, 'Your character ' + psmg[1] + ' has been created!')
+				send(cid, 'Your character has spawned at ' + str(spawnpoint) + '.')
 			else:
 				send(cid, 'fuck you, ' + psmg[2] +' isnt an existing world')
 	def newworld(self, psmg, sender, cid):
@@ -64,7 +67,8 @@ class handler:
 				return
 		else:
 			send(cid, 'You do not have permission to execute this command.')
-
+	def getplayer(self, psmg, sender, cid):
+		send(cid, db.getPlayer(sender, 1))
 
 
 def new_promise(command, sender, cid):
@@ -79,7 +83,11 @@ def new_promise(command, sender, cid):
 
 def send(cid, message):
 	time.sleep(0.01) #prevent it from breaking
-	print(str(cid) + '|' + str(message))
+	print('>|' + str(cid) + '|' + str(message))
+	sys.stdout.flush()
+def sendImage(cid, message, img_path):
+	time.sleep(0.01)
+	print('$|' + str(cid) + '|' + str(message) + '|' + str(img_path))
 	sys.stdout.flush()
 
 try:
@@ -91,7 +99,7 @@ try:
 except:
 	cid = "chatid"
 	sender = "123test"
-	msg = "!newworld benzou"
+	msg = "!getplayer"
 	psmg = msg.split(' ')
 
 

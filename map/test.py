@@ -1,4 +1,5 @@
 import numpy as np
-f = np.array([0,1,2,2,3,4,5])
-f[f==2]=3
-print(f.tolist())
+f = np.array([[0, 3],[1,5]]).T
+g = np.zeros((10, 10))
+g[f[0], f[1]] = 1
+print(g)

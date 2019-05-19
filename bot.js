@@ -8,6 +8,15 @@ var creds = function() {
   };
 };
 
+
+async function getid(cid, message, filename) {
+  var image_id = await client.uploadimage(filename, null, 30000).then(
+  function(image_id) { 
+    client.sendchatmessage(cid, [[0, message]], image_id); 
+  });
+}
+
+
 var client = new Client();
 
 // receive chat message events
@@ -18,17 +27,22 @@ client.on('chat_message', function(ev) {
   	message: ev.chat_message.message_content.segment[0].text, 
   	parsed_message: ev.chat_message.message_content.segment[0].text.split(' '),
   };
+
   if (msg.parsed_message[0].split('!').length === 2 && msg.parsed_message[0].split('!')[0] === '') {
-    try {
       const pythonProcess = spawn('python',["/Users/student/desktop/github/survival-game/main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
+      
+
       pythonProcess.stdout.on('data', (data) => {
         send = data.toString().split('|')
-        client.sendchatmessage(send[0], [[0,send[1]]])
+        if (send[0] === '>') {
+          client.sendchatmessage(send[1], [[0,send[2]]])
+        }
+        if (send[0] === '$') {
+          getid(send[1], send[2], send[3])
+        }
+        
       });
-  	}
-  	catch (err){
-  		console.log(err)
-  	}
+
   	
   }
 });
