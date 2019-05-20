@@ -118,14 +118,12 @@ try:
 	sender = sys.argv[2]
 	psmg = sys.argv[3].split(",")
 	msg = sys.argv[4]
-
 except:
 	#for offline testing
 	cid = "[CHAT]"
 	sender = "108791316110923750592"
 	msg = "!worldlist"
 	psmg = msg.split(' ')
-
 
 handler = handler()
 getattr(handler, psmg[0].split('!')[1])(psmg, sender, cid)

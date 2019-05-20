@@ -1,32 +1,35 @@
+    
 class biome:
-    import numpy as np
-    def __init__(self, type_):
-        self.type = type_
-        self.coords = -1
-    def setc(self, coords):
-        self.coords = (coords)
+	def __init__(self, type_):
+		self.type = type_
+		self.coords = []
+	def addc(self, coord):
+		self.coords.append(coord)
+
+class world():
+    def __init__(self, name):
+        self.players = []
+        self.name = name
 
 def colours(): #mainly an easy way to modify colours
-    return [
+	return [
     [0, 0, 0],
-    [0, 163, 204],
-    [0, 184, 230],
-    [255, 167, 142],
-    [228, 255, 76],
-    [153, 229, 253],
-    [37, 71, 59],
-    [223, 102, 102],
-    [255, 255, 153],
-    [187, 168, 23],
-    [173, 235, 173],
-    [0, 102, 0],
-    [50, 51, 1],
-    [238, 175, 106],
-    [182, 204, 12],
-    [70, 169, 56],
-    [77, 77, 77],
-    [230, 255, 255],
-    [166,252,252]
+    [0, 163, 204], #deep ocean
+    [0, 184, 230], #Shallow_ocean
+    [255, 167, 142], #Coral_reef
+    [45, 71, 13], #Kelp_forest //updated
+    [153, 229, 253], #Ice
+    [8, 48, 0], #Taiga //updated
+    [247, 192, 163], #Tundra //updated
+    [255, 255, 153], #sand
+    [185, 201, 106], #Steppe //updated
+    [92, 214, 102], #Plains //updated
+    [12, 109, 20], #Forest //updated
+    [28, 51, 30], #Swamp //updated
+    [237, 235, 128], #Desert //updated
+    [177, 216, 78], #Savanna //updated
+    [22, 226, 32], #Rainforest //updated
+    [77, 77, 77], #Mountain
+    [230, 255, 255], #Snow_mountain
+    [166,252,252] #river
     ]
-
-
