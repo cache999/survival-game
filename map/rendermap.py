@@ -120,7 +120,9 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
     
     from data_handler import database
     db = database()
-    db.setWorld(biome_list, name)
+    import copy
+    from map.classes import world
+    db.setWorld(biome_list, copy.deepcopy(world(name)), name)
     print('saving map to file... done')
 
     print('displaying map...')

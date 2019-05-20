@@ -1,5 +1,5 @@
 #simple data reader
-from data_handler import data
-
-dab = data()
-print(dab.isWorld('test'))
+from data_handler import database
+from map.classes import world
+db = database()
+print(db.getWorldData('alpha').players)
