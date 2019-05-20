@@ -44,6 +44,7 @@ class database:
 	#functions to get data, READ-ONLY
 	def getPlayer(self, chat_id, read_coords):
 		import pickle
+		from main import char
 		if (read_coords):
 			pfile = open('data/players/' + str(chat_id) + '.ec', 'rb')
 		else:
@@ -53,6 +54,7 @@ class database:
 
 	def getPlayerWorld(self, chat_id):
 		import pickle
+		from main import char
 		return self.getPlayer(chat_id, 0).world
 
 	def getMapDir(self, world_name):
