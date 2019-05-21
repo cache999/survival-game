@@ -70,11 +70,10 @@ class handler:
 		else:
 			send(cid, 'You do not have permission to execute this command.')
 	def map(self, psmg, sender, cid):
-		m = np.zeros((1024, 1024))
-		discovered = db.getPlayer(sender, 1).T
-		m[discovered] = 1
-		#function
-		send(cid, 'This function has not been implemented yet')
+		from draw_map import draw_pos
+		player = db.getPlayer(sender, 0)
+		draw_pos(sender, player.pos, player.world)
+		sendImage(cid, 'your current position', 'data/players/' + str(sender) + '.png')
 	def newworld(self, psmg, sender, cid):
 		if (sender == '108791316110923750592' or sender == '109696714510497833957'):
 			if (len(psmg) > 1):
@@ -122,7 +121,7 @@ except:
 	#for offline testing
 	cid = "[CHAT]"
 	sender = "108791316110923750592"
-	msg = "!worldlist"
+	msg = "!map"
 	psmg = msg.split(' ')
 
 handler = handler()

@@ -68,8 +68,8 @@ def display(biomelist, filename):
     ax = plt.Axes(fig, [0., 0., 1., 1.])
     ax.set_axis_off()
     fig.add_axes(ax)
-    ax.imshow(data, aspect='equal')
-    plt.savefig(filename, dpi=1024, vmin=0,vmax=255)
+    ax.imshow(data, aspect='equal', origin='lower')
+    plt.savefig(filename, dpi=1024, vmin=0,vmax=255, origin='lower')
     return
 
 

@@ -5,7 +5,7 @@ def draw_pos(chat_id, coords, world_name):
 	import cv2
 
 	x = coords[0]
-	y = coords[1]
+	y = 1023 - coords[1]
 	vrange = 20
 
 	bounds = [[x+vrange, y+vrange],[x-vrange, y-vrange]]
@@ -28,8 +28,7 @@ def draw_pos(chat_id, coords, world_name):
 	pos_map[vrange][vrange] = [0, 0, 255]
 	pos_map = cv2.resize(pos_map,(200, 200),fx=0, fy=0, interpolation = cv2.INTER_NEAREST)
 
-	cv2.imwrite('data/players/pos.png', pos_map)
-
-draw_pos("108791316110923750592", [500, 500], "alpha")
+	cv2.imwrite('data/players/' + str(chat_id) + '.png', pos_map)
+	return
 
 

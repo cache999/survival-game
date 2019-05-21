@@ -44,7 +44,6 @@ class database:
 	#functions to get data, READ-ONLY
 	def getPlayer(self, chat_id, read_coords):
 		import pickle
-		from main import char
 		if (read_coords):
 			pfile = open('data/players/' + str(chat_id) + '.ec', 'rb')
 		else:
@@ -79,17 +78,54 @@ class database:
 		import numpy as np
 		from map.classes import biome
 		import random
+		import matplotlib.pyplot as plt
 		world_array = self.getWorldMap(world_name)
 		invalid_biomes = [1, 2, 3, 4, 5, 7, 8, 9, 13, 16, 17, 18] #config later
 		coord_array = np.array([[0,0]])
 		for i in range(0, world_array.shape[0]):
 			if (not(world_array[i].type in invalid_biomes)):
 				coord_array = np.concatenate((coord_array, world_array[i].coords))
+		coord_array = coord_array.T
+		choice = random.randint(0, coord_array.shape[1])
+		choice = [coord_array[0][choice], coord_array[1][choice]]
+		f = np.zeros((1024, 1024))
+		f[coord_array[0], coord_array[1]]=0.3
+		print(choice[0], choice[1])
+		if (True):
+			f[choice[0]+1, choice[1]+1]=1
+			f[choice[0]+1, choice[1]-1]=1
+			f[choice[0]+1, choice[1]]=1
+			f[choice[0]-1, choice[1]+1]=1
+			f[choice[0]-1, choice[1]-1]=1
+			f[choice[0]-1, choice[1]]=1
+			f[choice[0], choice[1]+1]=1
+			f[choice[0], choice[1]-1]=1
+			f[choice[0], choice[1]]=1
+
+
+		fig = plt.figure()
+		fig.set_size_inches((1,1))
+		ax = plt.Axes(fig, [0., 0., 1., 1.])
+		ax.set_axis_off()
+		fig.add_axes(ax)
+		ax.imshow(f, aspect='equal', origin='lower')
+		plt.savefig('valid_spawns.png', dpi=1024, vmin=0,vmax=255, origin='lower')
 		coord_array = coord_array.tolist()
 		coord_array.pop(0)
-		return random.choice(coord_array)
+		
+		return [choice[1], choice[0]]
 		#get world
-
+		'''
+		print(coord_array.shape)
+		coord_array = np.delete(coord_array, 0, axis=0)
+		print(coord_array.shape)
+		coord_array = coord_array.T
+		print(coord_array.shape)
+		choice = random.randint(0, coord_array.shape[1])
+		#choice[1] = 1023 - choice[1]
+		return [coord_array[0][choice], coord_array[1][choice]]
+		#get world
+		'''
 	def appendToPlayerCoords(self, chat_id, explored_coords):
 		pass
 

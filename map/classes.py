@@ -1,11 +1,12 @@
     
 class biome:
-	def __init__(self, type_):
-		self.type = type_
-		self.coords = []
-	def addc(self, coord):
-		self.coords.append(coord)
-
+    import numpy as np
+    def __init__(self, type_):
+        self.type = type_
+        self.coords = -1
+    def setc(self, coords):
+        self.coords = (coords)
+        
 class world():
     def __init__(self, name):
         self.players = []
