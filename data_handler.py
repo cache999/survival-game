@@ -57,7 +57,6 @@ class database:
 		return self.getPlayer(chat_id, 0).world
 
 	def getMapDir(self, world_name):
-
 		return 'data/worlds/' + str(world_name) + '.png'
 
 	def getWorldMap(self, world_name):
@@ -88,44 +87,8 @@ class database:
 		coord_array = coord_array.T
 		choice = random.randint(0, coord_array.shape[1])
 		choice = [coord_array[0][choice], coord_array[1][choice]]
-		f = np.zeros((1024, 1024))
-		f[coord_array[0], coord_array[1]]=0.3
-		print(choice[0], choice[1])
-		if (True):
-			f[choice[0]+1, choice[1]+1]=1
-			f[choice[0]+1, choice[1]-1]=1
-			f[choice[0]+1, choice[1]]=1
-			f[choice[0]-1, choice[1]+1]=1
-			f[choice[0]-1, choice[1]-1]=1
-			f[choice[0]-1, choice[1]]=1
-			f[choice[0], choice[1]+1]=1
-			f[choice[0], choice[1]-1]=1
-			f[choice[0], choice[1]]=1
-
-
-		fig = plt.figure()
-		fig.set_size_inches((1,1))
-		ax = plt.Axes(fig, [0., 0., 1., 1.])
-		ax.set_axis_off()
-		fig.add_axes(ax)
-		ax.imshow(f, aspect='equal', origin='lower')
-		plt.savefig('valid_spawns.png', dpi=1024, vmin=0,vmax=255, origin='lower')
-		coord_array = coord_array.tolist()
-		coord_array.pop(0)
-		
 		return [choice[1], choice[0]]
 		#get world
-		'''
-		print(coord_array.shape)
-		coord_array = np.delete(coord_array, 0, axis=0)
-		print(coord_array.shape)
-		coord_array = coord_array.T
-		print(coord_array.shape)
-		choice = random.randint(0, coord_array.shape[1])
-		#choice[1] = 1023 - choice[1]
-		return [coord_array[0][choice], coord_array[1][choice]]
-		#get world
-		'''
 	def appendToPlayerCoords(self, chat_id, explored_coords):
 		pass
 

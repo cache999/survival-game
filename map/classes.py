@@ -6,7 +6,7 @@ class biome:
         self.coords = -1
     def setc(self, coords):
         self.coords = (coords)
-        
+
 class world():
     def __init__(self, name):
         self.players = []
@@ -34,3 +34,21 @@ def colours(): #mainly an easy way to modify colours
     [230, 255, 255], #Snow_mountain
     [166,252,252] #river
     ]
+
+class char:
+    def __init__(self, world, name):
+        self.head = -1
+        self.chest = -1
+        self.back = -1
+        self.rh = -1
+        self.lh = -1
+        self.inventory = -1
+        self.hunger = 75
+        self.thirst = 75
+        self.health = 100
+        self.exhaustion = 0 #int between 0 and 100
+        self.age = 0
+        self.world = world
+        self.name = name
+        self.pos = -1
+        self.biomeID = -1

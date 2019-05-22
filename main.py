@@ -4,7 +4,7 @@ from data_handler import database
 import threading
 db = database()
 promises = []
-mods = []
+mods = ['108791316110923750592']
 '''
 class promise:
 	def __init__(self, command, sender, cid):
@@ -21,23 +21,6 @@ class promise:
 				promises.pop(i)
 				return
 '''
-
-class char:
-	def __init__(self, world, name):
-		self.head = -1
-		self.chest = -1
-		self.back = -1
-		self.rh = -1
-		self.lh = -1
-		self.inventory = -1
-		self.hunger = 75
-		self.thirst = 75
-		self.health = 100
-		self.exhaustion = 0 #int between 0 and 100
-		self.age = 0
-		self.world = world
-		self.name = name
-		self.pos = -1
 
 
 class handler:
@@ -64,11 +47,12 @@ class handler:
 				db.setWorld(-1, world_object, psmg[2])
 			else:
 				send(cid, 'fuck you, ' + str(psmg[2]) +' isnt an existing world')
-	def complete_map(self, psmg, sender, cid):
+	def fullmap(self, psmg, sender, cid):
 		if (sender in mods):
 			sendImage(cid, 'world map', db.getMapDir(db.getPlayerWorld(sender)))
 		else:
 			send(cid, 'You do not have permission to execute this command.')
+		return
 	def map(self, psmg, sender, cid):
 		from draw_map import draw_pos
 		player = db.getPlayer(sender, 0)
@@ -118,10 +102,11 @@ try:
 	psmg = sys.argv[3].split(",")
 	msg = sys.argv[4]
 except:
-	#for offline testing
 	cid = "[CHAT]"
 	sender = "108791316110923750592"
-	msg = "!map"
+	msg = input('message: ')
+	if (msg == ''):
+		msg = "!map"
 	psmg = msg.split(' ')
 
 handler = handler()
