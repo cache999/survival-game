@@ -2,6 +2,7 @@ import sys
 import time
 from data_handler import database
 import threading
+from map.classes import char
 db = database()
 promises = []
 mods = ['108791316110923750592']
@@ -44,7 +45,7 @@ class handler:
 				from map.classes import world
 				world_object = db.getWorldData(psmg[2])
 				world_object.players.append(sender)
-				db.setWorld(-1, world_object, psmg[2])
+				db.setWorld(-1, -1, world_object, psmg[2])
 			else:
 				send(cid, 'fuck you, ' + str(psmg[2]) +' isnt an existing world')
 	def fullmap(self, psmg, sender, cid):
@@ -54,10 +55,8 @@ class handler:
 			send(cid, 'You do not have permission to execute this command.')
 		return
 	def map(self, psmg, sender, cid):
-		from draw_map import draw_pos
-		player = db.getPlayer(sender, 0)
-		draw_pos(sender, player.pos, player.world)
-		sendImage(cid, 'your current position', 'data/players/' + str(sender) + '.png')
+		#displays all areas player has visited
+		send(cid, 'This function is not implemented yet, were you looking for "!pos"?')
 	def newworld(self, psmg, sender, cid):
 		if (sender == '108791316110923750592' or sender == '109696714510497833957'):
 			if (len(psmg) > 1):
@@ -76,16 +75,38 @@ class handler:
 		if (f_c == -1):
 			send(cid, 'That coordinate is out of bounds!')
 			return
-		send(cid, 'You travelled to ' + str(f_c))
+		send(cid, str(player.name) + ' travelled to ' + str(f_c))
 		player.pos = f_c
+		player.biomeID = db.getIDofPos(player.pos, player.world)
 		db.setPlayer(sender, player, 0)
+	def gather(self, psmg, sender, cid):
+		from map.classes import biome, itemID
+		import configparser
+		from resources import generateResources, calculateLoot
+		itemnames = itemID()
+		player = db.getPlayer(sender, 0)
+		p_biome = db.getBiomeByID(player.biomeID, player.world)
+		if (type(p_biome.resources) == type(-1)):
+			p_biome = generateResources(p_biome)
+		loot, p_biome = calculateLoot(p_biome, psmg[1], 'damascus blade')
+		db.updateBiomeByID(player.biomeID, player.world, p_biome)
+		send(cid, 'you got ' + str(loot.tolist()))
+
 	def pos(self, psmg, sender, cid):
-		send(cid, 'You are currently at ' + str(db.getPlayer(sender, 0).pos))
+		from draw_map import draw_pos
+		player = db.getPlayer(sender, 0)
+		draw_pos(sender, player.pos, player.world)
+		sendImage(cid, str(player.name) + ' is currently at ' + str(player.pos), 'data/players/' + str(sender) + '.png')
 		return
 	def worldlist(self, psmg, sender, cid):
 		send(cid, db.worldList())
 		return
-
+	def resetbiomes(self, psmg, sender, cid):
+		if sender in mods:
+			player = db.getPlayer(sender, 0)
+			db.resetBiomes(player.world)
+		else:
+			send(cid, 'You do not have permission to execute this command.')
 
 def send(cid, message):
 	time.sleep(0.01) #prevent it from breaking

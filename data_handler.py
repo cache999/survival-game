@@ -28,12 +28,15 @@ class database:
 		pickler.dump(data)
 		pfile.close()
 
-	def setWorld(self, data, info, world_name):
+	def setWorld(self, data, id_array, info, world_name):
 		import pickle
+		import numpy as np
 		if (not(type(data) is int)):
 			pfile = open('data/worlds/' + str(world_name) + '.map','wb')
 			pickle.dump(data, pfile)
 			pfile.close()
+		if (not(type(id_array) is int)):
+			np.save('data/worlds/' + str(world_name) + '.ids', id_array)
 		if (not(type(info) is int)):
 			pfile = open('data/worlds/' + str(world_name) + '.dt','wb')
 			pickle.dump(info, pfile)
@@ -53,7 +56,7 @@ class database:
 
 	def getPlayerWorld(self, chat_id):
 		import pickle
-		from main import char
+		from map.classes import char
 		return self.getPlayer(chat_id, 0).world
 
 	def getMapDir(self, world_name):
@@ -67,6 +70,10 @@ class database:
 		import pickle
 		pfile = open('data/worlds/' + str(world_name) + '.dt', 'rb')
 		return pickle.Unpickler(pfile).load()
+	def getWorldBIDs(self, world_name):
+		import numpy as np
+		mmap_ids = np.load('data/worlds/' + str(world_name) + '.ids.npy', mmap_mode='r')
+		return mmap_ids
 
 	#functions to check
 	def isWorld(self, world_name):
@@ -106,3 +113,29 @@ class database:
 				msg = msg + str(len(wld.players)) + ' player(s)'
 				pfile.close()
 		return msg
+
+	def getIDofPos(self, coords, world_name):
+		import numpy as np
+		mmap_ids = self.getWorldBIDs(world_name)
+		return (mmap_ids[coords[1], coords[0]])[0]
+
+	def getBiomeByID(self, bid, world_name):
+		from map.classes import biome
+		world_map = self.getWorldMap(world_name)
+		return world_map[int(bid)]
+
+	def updateBiomeByID(self, bid, world_name, updated_biome):
+		from map.classes import biome
+		world_map = self.getWorldMap(world_name)
+		world_map[int(bid)] = updated_biome
+		self.setWorld(world_map, -1, -1, world_name)
+		return
+
+	def resetBiomes(self, world_name):
+		world = self.getWorldMap(world_name)
+		for i in range(0, len(world)):
+			world[i].resources = -1
+		self.setWorld(world, -1, -1, world_name)
+
+
+

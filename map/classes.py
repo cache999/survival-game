@@ -4,6 +4,8 @@ class biome:
     def __init__(self, type_):
         self.type = type_
         self.coords = -1
+        self.exhaustion = 1.0
+        self.resources = -1
     def setc(self, coords):
         self.coords = (coords)
 
@@ -52,3 +54,22 @@ class char:
         self.name = name
         self.pos = -1
         self.biomeID = -1
+
+
+
+
+
+
+def itemID():
+    return [
+    "none",
+    "log",
+    "twig",
+    "shrub",
+    "strub",
+    "apple",
+    "plant_fiber",
+    "wheat_seeds"
+    ]
+
+
