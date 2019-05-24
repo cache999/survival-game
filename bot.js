@@ -20,9 +20,9 @@ async function getid(cid, message, filename) {
 var client = new Client();
 
 bld = new Client.MessageBuilder()
-var help = bld.bold('---Help---').linebreak().text('For a more specific list, do ').linebreak().bold('!help').text(' - Shows this message.').linebreak().bold('!join <name> <world>').text(' - Creates a new character that is randomly spawned in the chosen world.').linebreak().bold('!travel <nesw> <pixels>').text(' - Travel in a certain direction. E.g. !travel ne 5.').linebreak().bold('!pos').text(' - Gets your current position.').toSegments()
+var help = bld.bold('---Help---').linebreak().text('For a more specific list, do ').linebreak().bold('!help').text(' - Shows this message.').linebreak().bold('!worldlist').text(' - Shows a list of all worlds.').linebreak().bold('!join <name> <world>').text(' - Creates a new character that is randomly spawned in the chosen world.').linebreak().bold('!travel <nesw> <pixels>').text(' - Travel in a certain direction. E.g. !travel ne 5.').linebreak().bold('!pos').text(' - Gets your current position.').linebreak().bold('!map').text(' - Shows all places you have explored so far.').linebreak().bold('!gather <time in minutes>').text(' - Gather materials in the biome you are in.').toSegments()
 bld = new Client.MessageBuilder()
-var helpm = bld.bold('---Mod commands---').linebreak().bold('!newworld').text(' - Randomly generates a world.').toSegments()
+var helpm = bld.bold('---Mod commands---').linebreak().text('The following commands are mod-only.').linebreak().bold('!newworld').text(' - Randomly generates a world.').linebreak().bold('!fullmap').text(' - Displays the entire map.').linebreak().bold('!resetbiomes').text(' - Resets the resources of all biomes.').toSegments()
 bld = new Client.MessageBuilder()
 
 // receive chat message events

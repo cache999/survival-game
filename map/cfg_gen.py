@@ -34,7 +34,7 @@ config.set('res_max', '9', '2:2,3:1,4:0.0001')
 
 config.add_section('res_search')
 config.add_comment('res_search', "Defines what item will be found every 1 minute of searching. Syntax: item:weight:qty:tool_needed. Rounds up to 1. Remember that 1 pixel", "100m^2.")
-config.set('res_search', '11', '1:10:1:none,5:1:1:none,6:5:3:none')
+config.set('res_search', '11', '0:20:1:none,1:10:1:none,5:1:1:none,6:5:3:none')
 config.set('res_search', '14', '1:3:1:none,7:0.1:1:none,6:3:3:none')
 config.set('res_search', '9', '2:2:3:none,3:1:1:none,4:0.005:1:none')
 

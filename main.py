@@ -5,7 +5,7 @@ import threading
 from map.classes import char
 db = database()
 promises = []
-mods = ['108791316110923750592']
+mods = ['108791316110923750592', '113117618922729693853']
 '''
 class promise:
 	def __init__(self, command, sender, cid):
@@ -56,7 +56,11 @@ class handler:
 		return
 	def map(self, psmg, sender, cid):
 		#displays all areas player has visited
-		send(cid, 'This function is not implemented yet, were you looking for "!pos"?')
+		from draw_map import draw_map
+		player = db.getPlayer(sender, 0)
+		pcoords = db.getPlayer(sender, 1)
+		draw_map(sender, pcoords, player.world)
+		sendImage(cid, 'All explored coordinates for player ' + str(player.name) + '.', 'data/players/' + str(sender) + '.png')
 	def newworld(self, psmg, sender, cid):
 		if (sender == '108791316110923750592' or sender == '109696714510497833957'):
 			if (len(psmg) > 1):
@@ -69,15 +73,22 @@ class handler:
 		else:
 			send(cid, 'You do not have permission to execute this command.')
 	def travel(self, psmg, sender, cid):
+		import numpy as np
 		player = db.getPlayer(sender, 0)
+		pcoords = db.getPlayer(sender, 1)
 		from misc import find_endpoint, find_uncovered
 		f_c = find_endpoint(psmg[1], float(psmg[2]), player.pos)
 		if (f_c == -1):
 			send(cid, 'That coordinate is out of bounds!')
 			return
 		send(cid, str(player.name) + ' travelled to ' + str(f_c))
+		
+		newcoords = find_uncovered(player.pos, f_c)
+
 		player.pos = f_c
 		player.biomeID = db.getIDofPos(player.pos, player.world)
+
+		db.setPlayer(sender, np.concatenate((pcoords, newcoords)), 1)
 		db.setPlayer(sender, player, 0)
 	def gather(self, psmg, sender, cid):
 		from map.classes import biome, itemID

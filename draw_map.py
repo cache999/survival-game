@@ -28,15 +28,15 @@ def draw_map(chat_id, explored, world_name):
 	import cv2
 	import PIL
 	from PIL import ImageEnhance, Image
-
+	backgroundcolor = [210, 240, 250]
 	vrange = 20
 	total = cv2.imread("data/worlds/" + world_name + ".png", 1)
 
-	world = np.full((1124, 1124, 3), [210, 240, 250])
+	world = np.full((1124, 1124, 3), backgroundcolor)
 	world[50:1074,50:1074] = total
 
 	visible = np.zeros((1124, 1124))
-	totalmap = np.full((1124, 1124, 3), [210, 240, 250])
+	totalmap = np.full((1124, 1124, 3), backgroundcolor)
 
 	for i in range(len(explored)):
 
@@ -66,6 +66,6 @@ def draw_map(chat_id, explored, world_name):
 
 	im = Image.fromarray(totalmap[lrow:hrow, lcol:hcol].astype('uint8'))
 
-	im = PIL.ImageEnhance.Color(im).enhance(0.1’)
+	im = PIL.ImageEnhance.Color(im).enhance(0.1)
 
 	cv2.imwrite("data/players/" + str(chat_id) + ".png", totalmap[lrow:hrow, lcol:hcol, 0:3])
