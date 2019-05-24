@@ -86,11 +86,21 @@ class handler:
 		itemnames = itemID()
 		player = db.getPlayer(sender, 0)
 		p_biome = db.getBiomeByID(player.biomeID, player.world)
+		if (int(psmg[1]) > 1440):
+			send(cid, 'You can only gather resources for up to 1 day (1440 minutes).')
+			return
 		if (type(p_biome.resources) == type(-1)):
 			p_biome = generateResources(p_biome)
 		loot, p_biome = calculateLoot(p_biome, psmg[1], 'damascus blade')
 		db.updateBiomeByID(player.biomeID, player.world, p_biome)
-		send(cid, 'you got ' + str(loot.tolist()))
+		message = [[0, 'You gathered resources for ' + str(psmg[1]) + ' minutes and recieved:']]
+		for i in range(0, loot.shape[0]):
+			if (loot[i, 1] != 0):
+				message.append([1, '\n'])
+				message.append([0, itemnames[int(loot[i, 0])], [1, None, None, None]])
+				message.append([0, ': '])
+				message.append([0, str(int(loot[i, 1])), [1, None, None, None]])
+		sendRaw(cid, message)
 
 	def pos(self, psmg, sender, cid):
 		from draw_map import draw_pos
@@ -105,8 +115,12 @@ class handler:
 		if sender in mods:
 			player = db.getPlayer(sender, 0)
 			db.resetBiomes(player.world)
+			send(cid, 'Biome resources reset successfully.')
 		else:
 			send(cid, 'You do not have permission to execute this command.')
+	def test(self, psmg, sender, cid):
+		message = [[0, 'You gathered resources for ' + str(psmg[1]) + ' minutes and recieved:', [1, None, None, None]]]
+		sendRaw(cid, message)
 
 def send(cid, message):
 	time.sleep(0.01) #prevent it from breaking
@@ -115,6 +129,11 @@ def send(cid, message):
 def sendImage(cid, message, img_path):
 	time.sleep(0.01)
 	print('$|' + str(cid) + '|' + str(message) + '|' + str(img_path))
+	sys.stdout.flush()
+def sendRaw(cid, message):
+	import json
+	time.sleep(0.01)
+	print('^|' + str(cid) + '|' + json.dumps(message))
 	sys.stdout.flush()
 
 try:

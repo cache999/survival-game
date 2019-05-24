@@ -23,6 +23,8 @@ bld = new Client.MessageBuilder()
 var help = bld.bold('---Help---').linebreak().text('For a more specific list, do ').linebreak().bold('!help').text(' - Shows this message.').linebreak().bold('!join <name> <world>').text(' - Creates a new character that is randomly spawned in the chosen world.').linebreak().bold('!travel <nesw> <pixels>').text(' - Travel in a certain direction. E.g. !travel ne 5.').linebreak().bold('!pos').text(' - Gets your current position.').toSegments()
 bld = new Client.MessageBuilder()
 var helpm = bld.bold('---Mod commands---').linebreak().bold('!newworld').text(' - Randomly generates a world.').toSegments()
+bld = new Client.MessageBuilder()
+
 // receive chat message events
 client.on('chat_message', function(ev) {
   var msg = {
@@ -43,13 +45,15 @@ client.on('chat_message', function(ev) {
 
       pythonProcess.stdout.on('data', (data) => {
         send = data.toString().split('|')
-        console.log(data.toString())
-        console.log(send)
         if (send[0] === '>') {
           client.sendchatmessage(send[1], [[0,send[2]]])
         }
         if (send[0] === '$') {
           getid(send[1], send[2], send[3].slice(0, -1))
+        }
+        if (send[0] === '^') {
+          console.log(JSON.parse(send[2]))
+          client.sendchatmessage(send[1], JSON.parse(send[2]))
         }
         
       });

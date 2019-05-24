@@ -57,9 +57,6 @@ class char:
 
 
 
-
-
-
 def itemID():
     return [
     "none",
@@ -68,8 +65,8 @@ def itemID():
     "shrub",
     "strub",
     "apple",
-    "plant_fiber",
-    "wheat_seeds"
+    "plant fibers",
+    "wheat seeds"
     ]
 
 
