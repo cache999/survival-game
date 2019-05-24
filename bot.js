@@ -12,7 +12,6 @@ var creds = function() {
 async function getid(cid, message, filename) {
   var image_id = await client.uploadimage(filename, null, 30000).then(
   function(image_id) { 
-    console.log(image_id)
     client.sendchatmessage(cid, [[0, message]], image_id); 
   });
 }
@@ -32,7 +31,6 @@ client.on('chat_message', function(ev) {
   	message: ev.chat_message.message_content.segment[0].text, 
   	parsed_message: ev.chat_message.message_content.segment[0].text.split(' '),
   };
-  console.log(msg.sender)
   if (msg.message === "!help") {
     client.sendchatmessage(msg.cid, help)
   }
@@ -45,6 +43,8 @@ client.on('chat_message', function(ev) {
 
       pythonProcess.stdout.on('data', (data) => {
         send = data.toString().split('|')
+        console.log(data.toString())
+        console.log(send)
         if (send[0] === '>') {
           client.sendchatmessage(send[1], [[0,send[2]]])
         }

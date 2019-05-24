@@ -20,7 +20,7 @@ def draw_pos(chat_id, coords, world_name):
 	pos_map = cv2.resize(pos_map,(200, 200),fx=0, fy=0, interpolation = cv2.INTER_NEAREST)
 
 	cv2.imwrite('data/players/' + str(chat_id) + '.png', pos_map)
-	cv2.imwrite('data/worlds/shit.png', world)
+	#cv2.imwrite('data/worlds/shit.png', world)
 	return
 
 def draw_map(chat_id, explored, world_name):

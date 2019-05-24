@@ -65,5 +65,16 @@ def find_adj(b, r, b_index):
 	return adj_list
 
 
+def tagged_array_from_blist(b_list):
+	from map.classes import biome
+	import numpy as np
+	#return tagged_ids
+	tagged_ids = np.zeros((1024,1024,2))
+	for i in range(0, len(b_list)):
+		for j in range(0, len(b_list[i].coords)):
+			tagged_ids[b_list[i].coords[j][0], b_list[i].coords[j][1]] = [i, b_list[i].type]
+	return tagged_ids
+
+
 
 

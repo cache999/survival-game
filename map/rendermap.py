@@ -113,8 +113,11 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
 
     tagged_data = make_tagged_data(biome_list)
 
-    from map.biome_remover import rm_small_biomes
+    from map.biome_remover import rm_small_biomes, tagged_array_from_blist
     biome_list = rm_small_biomes(biome_list, tagged_data)
+
+    #make tagged data HERE
+    tagged_ids = tagged_array_from_blist(biome_list)
     print('removing small biomes... done')
     #save biome_list into file
     
@@ -122,7 +125,7 @@ def generate_map(height, moisture, temperature, random, name, seed='random'):
     db = database()
     import copy
     from map.classes import world
-    db.setWorld(biome_list, copy.deepcopy(world(name)), name)
+    db.setWorld(biome_list, tagged_ids, copy.deepcopy(world(name)), name)
     print('saving map to file... done')
 
     print('displaying map...')

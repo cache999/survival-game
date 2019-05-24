@@ -28,12 +28,15 @@ class database:
 		pickler.dump(data)
 		pfile.close()
 
-	def setWorld(self, data, info, world_name):
+	def setWorld(self, data, id_array, info, world_name):
 		import pickle
+		import numpy as np
 		if (not(type(data) is int)):
 			pfile = open('data/worlds/' + str(world_name) + '.map','wb')
 			pickle.dump(data, pfile)
 			pfile.close()
+		if (not(type(id_array) is int)):
+			np.save('data/worlds/' + str(world_name) + '.ids', id_array)
 		if (not(type(info) is int)):
 			pfile = open('data/worlds/' + str(world_name) + '.dt','wb')
 			pickle.dump(info, pfile)
@@ -53,11 +56,10 @@ class database:
 
 	def getPlayerWorld(self, chat_id):
 		import pickle
-		from main import char
+		from map.classes import char
 		return self.getPlayer(chat_id, 0).world
 
 	def getMapDir(self, world_name):
-
 		return 'data/worlds/' + str(world_name) + '.png'
 
 	def getWorldMap(self, world_name):
@@ -68,6 +70,10 @@ class database:
 		import pickle
 		pfile = open('data/worlds/' + str(world_name) + '.dt', 'rb')
 		return pickle.Unpickler(pfile).load()
+	def getWorldBIDs(self, world_name):
+		import numpy as np
+		mmap_ids = np.load('data/worlds/' + str(world_name) + '.ids.npy', mmap_mode='r')
+		return mmap_ids
 
 	#functions to check
 	def isWorld(self, world_name):
@@ -88,44 +94,8 @@ class database:
 		coord_array = coord_array.T
 		choice = random.randint(0, coord_array.shape[1])
 		choice = [coord_array[0][choice], coord_array[1][choice]]
-		f = np.zeros((1024, 1024))
-		f[coord_array[0], coord_array[1]]=0.3
-		print(choice[0], choice[1])
-		if (True):
-			f[choice[0]+1, choice[1]+1]=1
-			f[choice[0]+1, choice[1]-1]=1
-			f[choice[0]+1, choice[1]]=1
-			f[choice[0]-1, choice[1]+1]=1
-			f[choice[0]-1, choice[1]-1]=1
-			f[choice[0]-1, choice[1]]=1
-			f[choice[0], choice[1]+1]=1
-			f[choice[0], choice[1]-1]=1
-			f[choice[0], choice[1]]=1
-
-
-		fig = plt.figure()
-		fig.set_size_inches((1,1))
-		ax = plt.Axes(fig, [0., 0., 1., 1.])
-		ax.set_axis_off()
-		fig.add_axes(ax)
-		ax.imshow(f, aspect='equal', origin='lower')
-		plt.savefig('valid_spawns.png', dpi=1024, vmin=0,vmax=255, origin='lower')
-		coord_array = coord_array.tolist()
-		coord_array.pop(0)
-		
 		return [choice[1], choice[0]]
 		#get world
-		'''
-		print(coord_array.shape)
-		coord_array = np.delete(coord_array, 0, axis=0)
-		print(coord_array.shape)
-		coord_array = coord_array.T
-		print(coord_array.shape)
-		choice = random.randint(0, coord_array.shape[1])
-		#choice[1] = 1023 - choice[1]
-		return [coord_array[0][choice], coord_array[1][choice]]
-		#get world
-		'''
 	def appendToPlayerCoords(self, chat_id, explored_coords):
 		pass
 
@@ -143,3 +113,29 @@ class database:
 				msg = msg + str(len(wld.players)) + ' player(s)'
 				pfile.close()
 		return msg
+
+	def getIDofPos(self, coords, world_name):
+		import numpy as np
+		mmap_ids = self.getWorldBIDs(world_name)
+		return (mmap_ids[coords[1], coords[0]])[0]
+
+	def getBiomeByID(self, bid, world_name):
+		from map.classes import biome
+		world_map = self.getWorldMap(world_name)
+		return world_map[int(bid)]
+
+	def updateBiomeByID(self, bid, world_name, updated_biome):
+		from map.classes import biome
+		world_map = self.getWorldMap(world_name)
+		world_map[int(bid)] = updated_biome
+		self.setWorld(world_map, -1, -1, world_name)
+		return
+
+	def resetBiomes(self, world_name):
+		world = self.getWorldMap(world_name)
+		for i in range(0, len(world)):
+			world[i].resources = -1
+		self.setWorld(world, -1, -1, world_name)
+
+
+
