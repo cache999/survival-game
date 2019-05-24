@@ -65,7 +65,7 @@ def draw_map(chat_id, explored, world_name):
 	lcol = min(cols)
 
 	im = Image.fromarray(totalmap[lrow:hrow, lcol:hcol].astype('uint8'))
-
 	im = PIL.ImageEnhance.Color(im).enhance(0.1)
+	im = cv2.resize(im,(800, 800),fx=0, fy=0, interpolation = cv2.INTER_NEAREST)
 
-	cv2.imwrite("data/players/" + str(chat_id) + ".png", totalmap[lrow:hrow, lcol:hcol, 0:3])
+	cv2.imwrite("data/players/" + str(chat_id) + ".png", im)
