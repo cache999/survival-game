@@ -23,4 +23,49 @@ def draw_pos(chat_id, coords, world_name):
 	cv2.imwrite('data/worlds/shit.png', world)
 	return
 
+def draw_map(chat_id, explored, world_name):
+	import numpy as np
+	import cv2
+	import PIL
+	from PIL import ImageEnhance, Image
 
+	vrange = 20
+	total = cv2.imread("data/worlds/" + world_name + ".png", 1)
+
+	world = np.full((1124, 1124, 3), [210, 240, 250])
+	world[50:1074,50:1074] = total
+
+	visible = np.zeros((1124, 1124))
+	totalmap = np.full((1124, 1124, 3), [210, 240, 250])
+
+	for i in range(len(explored)):
+
+		x = explored[i][0] + 50
+		y = 1023-explored[i][1] + 50
+
+		visible[y-vrange:y+vrange, x-vrange:x+vrange] = 1
+
+	for i in range(len(visible)):
+		for j in range(len(visible)):
+			if visible[i][j] == 1:
+				totalmap[i][j] = world[i][j]
+
+	poi = np.transpose(np.nonzero(visible))
+
+	rows = []
+	cols = []
+
+	for i in range(len(poi)):
+		rows.append(poi[i][0])
+		cols.append(poi[i][1])
+
+	hrow = max(rows)
+	lrow = min(rows)
+	hcol = max(cols)
+	lcol = min(cols)
+
+	im = Image.fromarray(totalmap[lrow:hrow, lcol:hcol].astype('uint8'))
+
+	im = PIL.ImageEnhance.Color(im).enhance(0.1’)
+
+	cv2.imwrite("data/players/" + str(chat_id) + ".png", totalmap[lrow:hrow, lcol:hcol, 0:3])
