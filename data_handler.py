@@ -116,12 +116,20 @@ class database:
 
 	def getIDofPos(self, coords, world_name):
 		import numpy as np
+		
+
 		mmap_ids = self.getWorldBIDs(world_name)
+
 		return (mmap_ids[coords[1], coords[0]])[0]
 
 	def getBiomeByID(self, bid, world_name):
 		from map.classes import biome
 		world_map = self.getWorldMap(world_name)
+		from map.classes import biome
+		from map.rendermap import display
+		biome = world_map[int(bid)]
+		display([biome], 'fuckthisshit')
+		
 		return world_map[int(bid)]
 
 	def updateBiomeByID(self, bid, world_name, updated_biome):
