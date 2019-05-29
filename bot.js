@@ -12,7 +12,6 @@ var creds = function() {
 async function getid(cid, message, filename) {
   var image_id = await client.uploadimage(filename, null, 30000).then(
   function(image_id) { 
-    console.log(image_id)
     client.sendchatmessage(cid, [[0, message]], image_id); 
   });
 }
@@ -41,21 +40,19 @@ client.on('chat_message', function(ev) {
     client.sendchatmessage(msg.cid, helpm)
   }
   if (msg.parsed_message[0].split('!').length === 2 && msg.parsed_message[0].split('!')[0] === '') {
-
-      const pythonProcess = spawn('python',["./main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
-      console.log('new  process')
+      const pythonProcess = spawn('python',["/Users/student/desktop/github/survival-game/main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
+      
 
       pythonProcess.stdout.on('data', (data) => {
         send = data.toString().split('|')
-        console.log(send)
         if (send[0] === '>') {
           client.sendchatmessage(send[1], [[0,send[2]]])
         }
         if (send[0] === '$') {
-          send[3] = send[3].slice(0, send[3].indexOf('.png')+4)
-          getid(send[1], send[2], send[3])
+          getid(send[1], send[2], send[3].slice(0, -1))
         }
         if (send[0] === '^') {
+          console.log(JSON.parse(send[2]))
           client.sendchatmessage(send[1], JSON.parse(send[2]))
         }
         
