@@ -1,0 +1,29 @@
+{
+	"Raw Materials": {
+
+	},
+	"Wood": {
+		"1": "Log"
+	},
+	"Organic Material": {
+		"1": "Plant Fiber"
+	},
+	"Herb Plant": {
+		
+	},
+	"Food": {
+		"1": "Apple"
+	},
+	"Rare Items": {
+		"1": "Strub",
+		"2": "Blue Spruce Leaf"
+	},
+	"Unknown": {
+		"1": "Unknown Plant - Forests",
+		"2": "Unknown Plant - Plains",
+		"3": "Unknown Plant - Wetland",
+		"4": "Unknown Plant - Subartic",
+		"5": "Unknown Plant - Artic",
+		"6": "Unknown Aquatic Plant"
+	}
+}
