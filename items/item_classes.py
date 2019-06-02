@@ -11,9 +11,9 @@ class Item:
 	def __init__(self, cat, id_, count, attributes):
 		import json
 		#initialize a new item object
-		self.cat = cat
-		self.id = id_
-		self.count = count #items can be of any stack size when initiated, changed once they are added to any container.
+		self.cat = str(cat)
+		self.id = int(id_)
+		self.count = int(count) #items can be of any stack size when initiated, changed once they are added to any container.
 		with open('items/ItemIdMap.json') as id_dict:
 			self.name = json.load(id_dict)[self.cat][str(self.id)]
 		if (type(attributes) == int):
@@ -23,8 +23,9 @@ class Item:
 				with open(file) as item_attr:
 					self.attr = json.load(item_attr)
 			else:
-				self.attr = {
-				}
+				self.attr = {}
+		else:
+			self.attr = {}
 		if (self.attr.get('stack') == None):
 			self.attr['stack'] = 99
 	def __str__(self):
@@ -50,7 +51,21 @@ class Container:
 		if (item.count != 0):
 			return item
 		return 0
+	def make_array(self):
+		import json
+		m = [[0, self.name, [1, None, None, None]], [0, ' has ' + str(self.slots) + ' slots and contains:']]
+		for i in range(0, self.slots):
+			m.append([1, '\n'])
+			if (type(self.items[i]) == int):
+				m.append([0, '--'])
+			else:
+				m.append([0, self.items[i].name + ': ' + str(self.items[i].count)])
+		return m
+	def __add__(self, item):
+		return self.recieve(item)
+		#this looks cool
 	def __str__(self):
+		#shows info about it in terminal.
 		m = self.name + ' has ' + str(self.slots) + ' slots and contains:\n'
 		for i in range(0, self.slots):
 			if (type(self.items[i]) == int):
@@ -75,10 +90,15 @@ class Container:
 			item.count -= new_to - to.count
 			to.count = new_to
 			return to, item
+'''
+Container + Item
+ - adds item to the container
+Container1
+'''
 if __name__ == "__main__":
 	cont1 = Container('benzou', 5)
 	wood = Item("Wood", 1, 39, -1)
-	cont1.recieve(wood)
+	print(cont1 + wood)
 	print(cont1)
 
 	cont2 = Container('bigger benzou', 15)

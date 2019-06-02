@@ -44,12 +44,13 @@ def generateResources(player_biome):
 	'''
 	return player_biome
 
-def calculateLoot(player_biome, time, equipment):
+def calculateLoot(player_biome, time, equipment, inventory):
 	import numpy as np
 	from map.classes import biome
 	import configparser
 	import json
 	import random
+	from items.item_classes import Item, Container
 	'''
 	Returns the amount of loot a player would get by
 	gathering resources in the biome in a give time.
@@ -63,20 +64,30 @@ def calculateLoot(player_biome, time, equipment):
 	weights = weights/weights.sum(0)
 	infos = np.array(list(map(lambda x: x['info'], biome_resources)))
 	loot = np.zeros(weights.shape[0])
+	time_taken = -1
 	for i in range(0, int(time)):
 		choice = np.random.choice(np.arange(infos.shape[0]), p=weights)
 		if (1 if random.random() < chances[choice] else 0): #successfully found an item
 			#append to inven
 			player_biome.resources[choice] -= 1
 			chances[choice] = player_biome.resources[choice] / player_biome.resources_max[choice]
-			loot[choice] += 1
-	return(loot)
+			iteminfo = infos[choice].tolist()
+			if (type(iteminfo[3]) != dict):
+				iteminfo[3] = int(iteminfo[3])
+			add = inventory + Item(iteminfo[0],iteminfo[1],iteminfo[2],iteminfo[3])
+			if (type(add) != int):
+				time_taken = i
+				break
+	return time_taken, inventory, player_biome
+	
 
 if __name__ == "__main__":
 	from map.classes import biome
+	from items.item_classes import Item, Container
 	import numpy as np
+	inv = Container('inventory', 15)
 	b = biome(11)
 	b.coords = np.zeros((10, 2))
 	b = generateResources(b)
-	for i in range(0, 1440):
-		print(calculateLoot(b, 60, 'damascus blade'))
+	calculateLoot(b, 1440, 'damascus blade', inv)
+		

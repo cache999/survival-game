@@ -39,12 +39,13 @@ def colours(): #mainly an easy way to modify colours
 
 class char:
     def __init__(self, world, name):
+        from items.item_classes import Container
         self.head = -1
         self.chest = -1
         self.back = -1
         self.rh = -1
         self.lh = -1
-        self.inventory = -1
+        self.inventory = Container(name + "'s inventory", 15)
         self.hunger = 75
         self.thirst = 75
         self.health = 100

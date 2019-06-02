@@ -72,6 +72,12 @@ class handler:
 				return
 		else:
 			send(cid, 'You do not have permission to execute this command.')
+	def inv(self, psmg, sender, cid):
+		player = db.getPlayer(sender, 0)
+		sendRaw(cid, player.inventory.make_array())
+	def inventory(self, psmg, sender, cid):
+		self.inv(psmg, sender, cid)
+
 	def travel(self, psmg, sender, cid):
 		import numpy as np
 		player = db.getPlayer(sender, 0)
@@ -102,16 +108,12 @@ class handler:
 			return
 		if (type(p_biome.resources) == type(-1)):
 			p_biome = generateResources(p_biome)
-		loot, p_biome = calculateLoot(p_biome, psmg[1], 'damascus blade')
+		time_taken, player.inventory, p_biome = calculateLoot(p_biome, psmg[1], 'damascus blade', player.inventory)
 		db.updateBiomeByID(player.biomeID, player.world, p_biome)
-		message = [[0, 'You gathered resources for ' + str(psmg[1]) + ' minutes and recieved:']]
-		for i in range(0, loot.shape[0]):
-			if (loot[i, 1] != 0):
-				message.append([1, '\n'])
-				message.append([0, itemnames[int(loot[i, 0])], [1, None, None, None]])
-				message.append([0, ': '])
-				message.append([0, str(int(loot[i, 1])), [1, None, None, None]])
-		sendRaw(cid, message)
+		if (time_taken != -1):
+			send(cid, 'Your inventory filled up at ' + str(time_taken) + ' minutes.')
+		db.setPlayer(sender, player, 0)
+		send(cid, 'You got items, check your inventory (placeholder until i add shit)')
 
 	def pos(self, psmg, sender, cid):
 		from draw_map import draw_pos
@@ -129,9 +131,13 @@ class handler:
 			send(cid, 'Biome resources reset successfully.')
 		else:
 			send(cid, 'You do not have permission to execute this command.')
-	def test(self, psmg, sender, cid):
-		message = [[0, 'You gathered resources for ' + str(psmg[1]) + ' minutes and recieved:', [1, None, None, None]]]
-		sendRaw(cid, message)
+	def resetinv(self, psmg, sender, cid):
+		from items.item_classes import Container
+		player = db.getPlayer(sender, 0)
+		player.inventory = Container(player.name + "'s inventory", 15)
+		db.setPlayer(sender, player, 0)
+		send(cid, 'Your inventory has been reset.')
+		
 
 def send(cid, message):
 	time.sleep(0.01) #prevent it from breaking

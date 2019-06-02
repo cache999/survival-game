@@ -1,10 +1,10 @@
 {
 "11": [
 	{"info":["Wood", 1, 1, -1],
-	"weight": 2,
+	"weight": 10,
 	"max": 20},
-	{"info":["Wood", 2, 1, -1],
-	"weight": 5,
+	{"info":["Unknown", 1, 1, -1],
+	"weight": 1,
 	"max": 25}
 	]
 }

@@ -12,6 +12,7 @@ var creds = function() {
 async function getid(cid, message, filename) {
   var image_id = await client.uploadimage(filename, null, 30000).then(
   function(image_id) { 
+    console.log(image_id)
     client.sendchatmessage(cid, [[0, message]], image_id); 
   });
 }
@@ -24,14 +25,14 @@ var help = bld.bold('---Help---').linebreak().text('For a more specific list, do
 bld = new Client.MessageBuilder()
 var helpm = bld.bold('---Mod commands---').linebreak().text('The following commands are mod-only.').linebreak().bold('!newworld').text(' - Randomly generates a world.').linebreak().bold('!fullmap').text(' - Displays the entire map.').linebreak().bold('!resetbiomes').text(' - Resets the resources of all biomes.').toSegments()
 bld = new Client.MessageBuilder()
-
+console.log(help)
 // receive chat message events
 client.on('chat_message', function(ev) {
   var msg = {
-  	cid: ev.conversation_id.id,
-  	sender: ev.sender_id.chat_id, 
-  	message: ev.chat_message.message_content.segment[0].text, 
-  	parsed_message: ev.chat_message.message_content.segment[0].text.split(' '),
+    cid: ev.conversation_id.id,
+    sender: ev.sender_id.chat_id, 
+    message: ev.chat_message.message_content.segment[0].text, 
+    parsed_message: ev.chat_message.message_content.segment[0].text.split(' '),
   };
   if (msg.message === "!help") {
     client.sendchatmessage(msg.cid, help)
@@ -40,25 +41,27 @@ client.on('chat_message', function(ev) {
     client.sendchatmessage(msg.cid, helpm)
   }
   if (msg.parsed_message[0].split('!').length === 2 && msg.parsed_message[0].split('!')[0] === '') {
-      const pythonProcess = spawn('python',["/Users/student/desktop/github/survival-game/main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
-      
+
+      const pythonProcess = spawn('python',["./main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
+      console.log('new  process')
 
       pythonProcess.stdout.on('data', (data) => {
         send = data.toString().split('|')
+        console.log(send)
         if (send[0] === '>') {
           client.sendchatmessage(send[1], [[0,send[2]]])
         }
         if (send[0] === '$') {
-          getid(send[1], send[2], send[3].slice(0, -1))
+          send[3] = send[3].slice(0, send[3].indexOf('.png')+4)
+          getid(send[1], send[2], send[3])
         }
         if (send[0] === '^') {
-          console.log(JSON.parse(send[2]))
           client.sendchatmessage(send[1], JSON.parse(send[2]))
         }
         
       });
 
-  	
+    
   }
 });
 
