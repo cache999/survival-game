@@ -97,10 +97,9 @@ class handler:
 		db.setPlayer(sender, np.concatenate((pcoords, newcoords)), 1)
 		db.setPlayer(sender, player, 0)
 	def gather(self, psmg, sender, cid):
-		from map.classes import biome, itemID
+		from map.classes import biome
 		import configparser
 		from resources import generateResources, calculateLoot
-		itemnames = itemID()
 		player = db.getPlayer(sender, 0)
 		p_biome = db.getBiomeByID(player.biomeID, player.world)
 		if (int(psmg[1]) > 1440):

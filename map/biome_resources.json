@@ -1,10 +1,390 @@
 {
-"11": [
-	{"info":["Wood", 1, 1, -1],
+"5": [
+	{"info": ["Raw Materials", 3, 1, -1],
 	"weight": 10,
-	"max": 20},
-	{"info":["Unknown", 1, 1, -1],
+	"max": 999
+	},
+
+	{"info": ["Raw Materials", 4, 1, -1],
+	"weight": 10,
+	"max": 999
+	},
+
+	{"info": [null, null, null, null],
+	"weight": 10,
+	"max": 999
+	},
+
+	{"info": ["Unknown", 5, 1, -1],
+	"weight": 0.1,
+	"max": 999
+	}
+],
+
+"6": [
+	{"info": ["Wood", 1, 1, -1],
 	"weight": 1,
-	"max": 25}
-	]
+	"max": 999
+	},
+
+	{"info": ["Unknown", 4, 1, -1],
+	"weight": 0.5,
+	"max": 999
+	},
+
+	{"info": ["Rare Items", 2, 16, -1],
+	"weight": 0.5,
+	"max": 999
+	},
+
+	{"info": ["Seeds", 1, 16, -1],
+	"weight": 5,
+	"max": 999
+	},
+
+	{"info": ["Plants", 1, 3, -1],
+	"weight": 40,
+	"max": 999
+	},
+
+	{"info": ["Wood", 2, 1, -1],
+	"weight": 60,
+	"max": 999
+	},
+
+	{"info": ["Wood", 3, 1, -1],
+	"weight": 60,
+	"max": 999
+	},
+
+	{"info": ["Food", 4, 12, -1],
+	"weight": 5,
+	"max": 999
+	},
+
+	{"info": [null, null, null, null],
+	"weight": 202.8,
+	"max": 999
+	}
+],
+
+"7": [
+	{"info": ["Fungi", 1, 1, -1],
+	"weight": 4,
+	"max": 999
+	},
+
+	{"info": ["Plants", 4, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+
+	{"info": ["Unknown", 4, 1, -1],
+	"weight": 0.25,
+	"max": 999
+	},
+
+	{"info": ["Wood", 4, 1, -1],
+	"weight": 4,
+	"max": 999
+	},
+
+	{"info": ["Plants", 1, 3, -1],
+	"weight": 30,
+	"max": 999
+	},
+
+	{"info": [null, null, null, null],
+	"weight": 157,
+	"max": 999
+	}
+],
+
+"8": [
+	{"info": ["Raw Materials", 1, 1, -1],
+	"weight": 49,
+	"max": 999
+	},
+
+	{"info": ["Decorative Materials", 2, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+
+	{"info": [null, null, null, null],
+	"weight": 50,
+	"max": 999
+	}
+],
+
+"9": [
+	{"info": ["Wood", 3, 1, -1],
+	"weight": 1750,
+	"max": 999
+	},
+
+	{"info": ["Plants", 1, 1, -1],
+	"weight": 750,
+	"max": 999
+	},
+
+	{"info": ["Wood", 4, 1, -1],
+	"weight": 500,
+	"max": 999
+	},
+
+	{"info": ["Rare Items", 1, 1, -1],
+	"weight": 2,
+	"max": 999
+	},
+
+	{"info": [null, null, null, null],
+	"weight": 6998,
+	"max": 999
+	}
+],
+
+"10": [
+
+	{"info": ["Plants", 1, 3, -1],
+	"weight": 40,
+	"max": 999
+	},
+
+	{"info": ["Decorative Materials", 1, 2, -1],
+	"weight": 10,
+	"max": 999
+	},
+
+	{"info": [null, null, null, null],
+	"weight": 50,
+	"max": 999
+	}
+],
+
+"11": [
+	
+	{"info": ["Wood", 1, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+
+	{"info": ["Food", 1, 1, -1],
+	"weight": 3,
+	"max": 999
+	},
+
+	{"info": ["Wood", 2, 1, -1],
+	"weight": 60,
+	"max": 999
+	},
+
+	{"info": ["Wood", 3, 1, -1],
+	"weight": 60,
+	"max": 999
+	},
+
+	{"info": ["Plants", 1, 3, -1],
+	"weight": 60,
+	"max": 999
+	},
+
+	{"info": ["Fungi", 2, 1, -1],
+	"weight": 0.5,
+	"max": 999
+	},
+
+	{"info": ["Fungi", 1, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+
+	{"info": ["Unknown", 1, 1, -1],
+	"weight": 0.5,
+	"max": 999
+	},
+	
+	{"info": [null, null, null, null],
+	"weight": 185.5,
+	"max": 999
+	}
+],
+
+"12": [
+	
+	{"info": ["Wood", 1, 1, -1],
+	"weight": 4,
+	"max": 999
+	},
+
+	{"info": ["Wood", 6, 1, -1],
+	"weight": 4,
+	"max": 999
+	},
+
+	{"info": ["Raw Materials", 2, 1, -1],
+	"weight": 20,
+	"max": 999
+	},
+
+	{"info": ["Minerals", 1, 1, -1],
+	"weight": 0.1,
+	"max": 999
+	},
+
+	{"info": ["Plants", 6, 1, -1],
+	"weight": 8,
+	"max": 999
+	},
+
+	{"info": ["Plants", 7, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+
+	{"info": ["Plants", 8, 1, -1],
+	"weight": 19,
+	"max": 999
+	},
+
+	{"info": ["Plants", 9, 1, -1],
+	"weight": 1.9,
+	"max": 999
+	},
+
+	{"info": ["Herbs", 3, 1, -1],
+	"weight": 2.9,
+	"max": 999
+	},
+	
+	{"info": ["Plants", 4, 1, -1],
+	"weight": 40,
+	"max": 999
+	},
+
+	{"info": ["Fungi", 1, 1, -1],
+	"weight": 8,
+	"max": 999
+	},
+
+	{"info": [null, null, null, null],
+	"weight": 99,
+	"max": 999
+	}
+],
+
+"13": [
+	
+	{"info": ["Minerals", 2, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+
+	{"info": ["Raw Materials", 1, 1, -1],
+	"weight": 300,
+	"max": 999
+	},
+
+	{"info": ["Plants", 10, 4, -1],
+	"weight": 20,
+	"max": 999
+	},
+
+	{"info": ["Wood", 5, 3, -1],
+	"weight": 20,
+	"max": 999
+	},
+	
+	{"info": [null, null, null, null],
+	"weight": 1159,
+	"max": 999
+	}
+],
+
+"14": [
+	
+	{"info": ["Wood", 1, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+
+	{"info": ["Wood", 2, 1, -1],
+	"weight": 30,
+	"max": 999
+	},
+
+	{"info": ["Wood", 3, 1, -1],
+	"weight": 25.8,
+	"max": 999
+	},
+
+	{"info": ["Plants", 1, 3, -1],
+	"weight": 30,
+	"max": 999
+	},
+
+	{"info": ["Food", 2, 3, -1],
+	"weight": 0.1,
+	"max": 999
+	},
+
+	{"info": ["Food", 3, 3, -1],
+	"weight": 0.1,
+	"max": 999
+	},
+
+	{"info": ["Seeds", 2, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+	
+	{"info": [null, null, null, null],
+	"weight": 163,
+	"max": 999
+	}
+],
+
+"15": [
+	
+	{"info": ["Wood", 1, 1, -1],
+	"weight": 4,
+	"max": 999
+	},
+
+	{"info": ["Wood", 2, 1, -1],
+	"weight": 120,
+	"max": 999
+	},
+
+	{"info": ["Wood", 3, 1, -1],
+	"weight": 120,
+	"max": 999
+	},
+
+	{"info": ["Unknown", 1, 1, -1],
+	"weight": 8,
+	"max": 999
+	},
+
+	{"info": ["Fungi", 2, 1, -1],
+	"weight": 8,
+	"max": 999
+	},
+
+	{"info": ["Food", 1, 1, -1],
+	"weight": 8,
+	"max": 999
+	},
+
+	{"info": ["Plants", 5, 1, -1],
+	"weight": 1,
+	"max": 999
+	},
+	
+	{"info": [null, null, null, null],
+	"weight": 218,
+	"max": 999
+	}
+]
+
 }

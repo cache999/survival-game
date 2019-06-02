@@ -1,18 +1,57 @@
 {
+	"Nothing": {
+		"1": "Nothing"
+	},
 	"Raw Materials": {
-
+		"1": "Sand",
+		"2": "Peat",
+		"3": "Ice",
+		"4": "Snow"
+	},
+	"Minerals": {
+		"1": "Lignite",
+		"2": "Diamond"
 	},
 	"Wood": {
-		"1": "Log"
+		"1": "Log",
+		"2": "Branch",
+		"3": "Twig",
+		"4": "Shrub",
+		"5": "Thorned Branch",
+		"6": "Air root"
 	},
-	"Organic Material": {
-		"1": "Plant Fiber"
+	"Plants": {
+		"1": "Plant Fiber",
+		"2": "Leaf",
+		"3": "Flower",
+		"4": "Moss",
+		"5": "Sugar Cane",
+		"6": "Reed",
+		"7": "Papyrus",
+		"8": "Lilypad",
+		"9": "Cattail",
+		"10": "Cactus"
 	},
-	"Herb Plant": {
-		
+	"Fungi": {
+		"1": "Lichen",
+		"2": "Mushroom"
+	},
+	"Herbs": {
+		"1": "placeholder herb plant"
 	},
 	"Food": {
-		"1": "Apple"
+		"1": "Apple",
+		"2": "Pumpkin",
+		"3": "Melon",
+		"4": "Berry"
+	},
+	"Seeds": {
+		"1": "Pinecone",
+		"2": "Wheat seeds"
+	},
+	"Decorative Materials": {
+		"1": "Flower",
+		"2": "Seashell"
 	},
 	"Rare Items": {
 		"1": "Strub",

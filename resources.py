@@ -72,12 +72,15 @@ def calculateLoot(player_biome, time, equipment, inventory):
 			player_biome.resources[choice] -= 1
 			chances[choice] = player_biome.resources[choice] / player_biome.resources_max[choice]
 			iteminfo = infos[choice].tolist()
-			if (type(iteminfo[3]) != dict):
-				iteminfo[3] = int(iteminfo[3])
-			add = inventory + Item(iteminfo[0],iteminfo[1],iteminfo[2],iteminfo[3])
-			if (type(add) != int):
-				time_taken = i
-				break
+			if (iteminfo[0] != None):
+				if (type(iteminfo[3]) != dict):
+					iteminfo[3] = int(iteminfo[3])
+				add = inventory + Item(iteminfo[0],iteminfo[1],iteminfo[2],iteminfo[3])
+				if (type(add) != int):
+					time_taken = i
+					break
+				else:
+					loot[choice] += 1
 	return time_taken, inventory, player_biome
 	
 
