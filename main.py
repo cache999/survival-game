@@ -214,6 +214,19 @@ class handler:
 		db.removePlayer(sender)
 		sendRaw(cid, [[0, 'You died.', [1, None, None, None]]])
 
+
+	def pig(self, psmg, sender, cid):
+		send(cid, 'oink')
+	def help(self, psmg, sender, cid):
+		import json
+		if (len(psmg) == 1):
+			psmg.append('l')
+		with open('help.json') as help_json:
+			help_json = json.load(help_json)
+		sendRaw(cid, help_json.get(psmg[1], [[0, "That isn't a valid category! Try 'l', 'w', 'i' or 'a'."]]))
+
+
+
 def send(cid, message):
 	time.sleep(0.01) #prevent it from breaking
 	print('>|' + str(cid) + '|' + str(message)) #keep

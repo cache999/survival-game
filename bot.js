@@ -36,12 +36,6 @@ client.on('chat_message', function(ev) {
     message: ev.chat_message.message_content.segment[0].text, 
     parsed_message: ev.chat_message.message_content.segment[0].text.split(' '),
   };
-  if (msg.message === "!help") {
-    client.sendchatmessage(msg.cid, help)
-  }
-  if (msg.message === "!help -m") {
-    client.sendchatmessage(msg.cid, helpm)
-  }
   if (msg.parsed_message[0].split('!').length === 2 && msg.parsed_message[0].split('!')[0] === '') {
 
       const pythonProcess = spawn('python',["./main.py", msg.cid, msg.sender, msg.parsed_message, msg.message]);
