@@ -22,3 +22,4 @@ def find_uncovered(start, end):
 	import numpy as np
 	a, b = sk.draw.line(start[0], start[1], end[0], end[1])
 	return np.vstack((a, b)).T
+

@@ -25,14 +25,16 @@ var help = bld.bold('---Help---').linebreak().text('For a more specific list, do
 bld = new Client.MessageBuilder()
 var helpm = bld.bold('---Mod commands---').linebreak().text('The following commands are mod-only.').linebreak().bold('!newworld').text(' - Randomly generates a world.').linebreak().bold('!fullmap').text(' - Displays the entire map.').linebreak().bold('!resetbiomes').text(' - Resets the resources of all biomes.').toSegments()
 bld = new Client.MessageBuilder()
+var test = [[0, '&nbsp;'],[0, '&nbsp;'],[0, '&nbsp;'],[0, 'hi']]
+console.log(test)
 
 // receive chat message events
 client.on('chat_message', function(ev) {
   var msg = {
-  	cid: ev.conversation_id.id,
-  	sender: ev.sender_id.chat_id, 
-  	message: ev.chat_message.message_content.segment[0].text, 
-  	parsed_message: ev.chat_message.message_content.segment[0].text.split(' '),
+    cid: ev.conversation_id.id,
+    sender: ev.sender_id.chat_id, 
+    message: ev.chat_message.message_content.segment[0].text, 
+    parsed_message: ev.chat_message.message_content.segment[0].text.split(' '),
   };
   if (msg.message === "!help") {
     client.sendchatmessage(msg.cid, help)
@@ -47,7 +49,6 @@ client.on('chat_message', function(ev) {
 
       pythonProcess.stdout.on('data', (data) => {
         send = data.toString().split('|')
-        console.log(send)
         if (send[0] === '>') {
           client.sendchatmessage(send[1], [[0,send[2]]])
         }
@@ -56,21 +57,20 @@ client.on('chat_message', function(ev) {
           getid(send[1], send[2], send[3])
         }
         if (send[0] === '^') {
+          console.log(JSON.parse(send[2]))
           client.sendchatmessage(send[1], JSON.parse(send[2]))
         }
         
       });
 
-  	
+    
   }
 });
-
 
 // connect and post a message.
 // the id is a conversation id.
 client.connect(creds).then(function() {
-    return client.sendchatmessage('UgwL1fuCnZlZEBsOLBl4AaABAagB58n9DA',
-    [[0, 'Hello World']]);
+    return client.sendchatmessage('UgwL1fuCnZlZEBsOLBl4AaABAagB58n9DA', [[0, 'Hello World█']]);
 }).done();
 
 /* 
