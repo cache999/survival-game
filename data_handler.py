@@ -80,6 +80,10 @@ class database:
 		import os
 		return os.path.isfile("data/worlds/" + str(world_name) + '.map')
 
+	def isPlayer(self, chat_id):
+		import os
+		return os.path.isfile("data/players/" + str(chat_id) + '.dt') and os.path.isfile("data/players/" + str(chat_id) + '.ec')
+
 	def spawn_player(self, world_name):
 		import numpy as np
 		from map.classes import biome
@@ -116,8 +120,6 @@ class database:
 
 	def getIDofPos(self, coords, world_name):
 		import numpy as np
-		
-
 		mmap_ids = self.getWorldBIDs(world_name)
 
 		return (mmap_ids[coords[1], coords[0]])[0]
@@ -128,7 +130,6 @@ class database:
 		from map.classes import biome
 		from map.rendermap import display
 		biome = world_map[int(bid)]
-		display([biome], 'fuckthisshit')
 		
 		return world_map[int(bid)]
 
@@ -145,5 +146,10 @@ class database:
 			world[i].resources = -1
 		self.setWorld(world, -1, -1, world_name)
 
-
+	def removePlayer(self, chat_id):
+		import os
+		os.remove("data/players/" + chat_id + ".dt")
+		os.remove("data/players/" + chat_id + ".ec")
+		if os.path.exists("data/players/" + chat_id + ".png"):
+			os.remove("data/players/" + chat_id + ".png")
 

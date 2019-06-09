@@ -10,13 +10,13 @@
 	"max": 999
 	},
 
-	{"info": [null, null, null, null],
-	"weight": 10,
+	{"info": ["Unknown", 5, 1, -1],
+	"weight": 0.1,
 	"max": 999
 	},
 
-	{"info": ["Unknown", 5, 1, -1],
-	"weight": 0.1,
+	{"info": ["Nothing", 1, 0, -1],
+	"weight": 10,
 	"max": 999
 	}
 ],
@@ -62,7 +62,7 @@
 	"max": 999
 	},
 
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 202.8,
 	"max": 999
 	}
@@ -94,7 +94,7 @@
 	"max": 999
 	},
 
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 157,
 	"max": 999
 	}
@@ -111,7 +111,7 @@
 	"max": 999
 	},
 
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 50,
 	"max": 999
 	}
@@ -138,7 +138,7 @@
 	"max": 999
 	},
 
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 6998,
 	"max": 999
 	}
@@ -156,7 +156,7 @@
 	"max": 999
 	},
 
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 50,
 	"max": 999
 	}
@@ -204,7 +204,7 @@
 	"max": 999
 	},
 	
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 185.5,
 	"max": 999
 	}
@@ -267,7 +267,7 @@
 	"max": 999
 	},
 
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 99,
 	"max": 999
 	}
@@ -295,7 +295,7 @@
 	"max": 999
 	},
 	
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 1159,
 	"max": 999
 	}
@@ -338,7 +338,7 @@
 	"max": 999
 	},
 	
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 163,
 	"max": 999
 	}
@@ -381,7 +381,7 @@
 	"max": 999
 	},
 	
-	{"info": [null, null, null, null],
+	{"info": ["Nothing", 1, 0, -1],
 	"weight": 218,
 	"max": 999
 	}

@@ -49,13 +49,12 @@ class char:
         self.hunger = 75
         self.thirst = 75
         self.health = 100
-        self.exhaustion = 0 #int between 0 and 100
+        self.exhaustion = 100 #int between 0 and 100
         self.age = 0
         self.world = world
         self.name = name
         self.pos = -1
         self.biomeID = -1
-
 
 
 def itemID():

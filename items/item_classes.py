@@ -28,26 +28,29 @@ class Item:
 			self.attr = {}
 		if (self.attr.get('stack') == None):
 			self.attr['stack'] = 99
-	def __str__(self):
-		return 'fuk'
+	#def __str__(self):
+	#	return 'fuk'
 	def __eq__(self, other):
-		if (type(other) == int):
-			return 1
-		return ((self.cat == other.cat and self.id == other.id and self.attr == other.attr and other.count < other.attr['stack']))
+		return (self.cat == other.cat and self.id == other.id and self.attr == other.attr)
+	def __bool__(self):
+		#checks if the item is empty
+		return not(self.cat == "Nothing")
+	def __getitem__(self, key):
+		return self.attr.get(key)
 
 class Container:
 	def __init__(self, name, slots):
 		self.slots = slots
-		self.items = np.zeros(self.slots, dtype=object)
+		self.items = np.full(self.slots, Item("Nothing", 1, 0, -1) ,dtype=object)
 		self.name = name
 	def recieve(self, item):
 		#appends what it can to its own slots.
 		#returns 0 if all were accepted, or the item if there was something left over.
 		for i in range(0, self.slots):
-			if (item == self.items[i]):
+			if ((item == self[i] and self[i].count < self[i].attr['stack']) or not(bool(self[i]))):
 				if (item.count == 0):
 					break
-				self.items[i], item = self.appendToStack(self.items[i], item)
+				self[i], item = self.appendToStack(self[i], item)
 		if (item.count != 0):
 			return item
 		return 0
@@ -56,10 +59,11 @@ class Container:
 		m = [[0, self.name, [1, None, None, None]], [0, ' has ' + str(self.slots) + ' slots and contains:']]
 		for i in range(0, self.slots):
 			m.append([1, '\n'])
-			if (type(self.items[i]) == int):
-				m.append([0, '--'])
+			m.append([0, str(i+1) + ': '])
+			if (bool(self[i])):
+				m.append([0, self[i].name + ': ' + str(self[i].count)])
 			else:
-				m.append([0, self.items[i].name + ': ' + str(self.items[i].count)])
+				m.append([0, '--'])
 		return m
 	def __add__(self, item):
 		return self.recieve(item)
@@ -68,19 +72,19 @@ class Container:
 		#shows info about it in terminal.
 		m = self.name + ' has ' + str(self.slots) + ' slots and contains:\n'
 		for i in range(0, self.slots):
-			if (type(self.items[i]) == int):
+			if (type(self[i]) == int):
 				m = m + '<empty slot>\n'
 			else:
-				m = m + self.items[i].name + ': ' + str(self.items[i].count) + '\n'
+				m = m + self[i].name + ': ' + str(self[i].count) + '\n'
 		return m
 	def transfer(self, index, cont):
 		#tries to transfer an item to a different container.
-		if (type(self.items[index]) == int):
+		if (type(self[index]) == int):
 			return 0
-		self.items[index] = cont.recieve(self.items[index])
+		self[index] = cont.recieve(self[index])
 	def appendToStack(self, to, item):
 		import copy
-		if (type(to) == int):
+		if (not(bool(to))): #if empty:
 			to = copy.deepcopy(item)
 			to.count = min(item.attr['stack'], item.count)
 			item.count = item.count - to.count
@@ -90,6 +94,25 @@ class Container:
 			item.count -= new_to - to.count
 			to.count = new_to
 			return to, item
+	def rmByIndex(self, index, count):
+		#remove will first try to remove from the least full stack, then in order from bottom right to top left.
+		import json
+		removed = min(int(count), self[index].count)
+		self[index].count -= removed
+		if (self[index].count == 0):
+			self[index] = Item("Nothing", 1, 0, -1)
+		return count - removed #remainder
+	def getCat(self, index):
+		return self[index].cat
+
+	#i have no idea but these are
+	def __getitem__(self, key):
+		return self.items[key]
+	def __setitem__(self, key, value):
+		self.items[key] = value
+
+
+
 '''
 Container + Item
  - adds item to the container
@@ -97,18 +120,6 @@ Container1
 '''
 if __name__ == "__main__":
 	cont1 = Container('benzou', 5)
-	wood = Item("Wood", 1, 39, -1)
-	print(cont1 + wood)
+	cont1 + Item('Wood', 1, 6, -1)
+	print('added')
 	print(cont1)
-
-	cont2 = Container('bigger benzou', 15)
-	cont1.transfer(2, cont2)
-	print(cont1)
-	print(cont2)
-
-	cont1.recieve(Item("Unknown", 3, 9, -1))
-	cont2.transfer(1, cont1)
-
-	print(cont1)
-	print(cont2)
-
