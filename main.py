@@ -6,24 +6,6 @@ from map.classes import char
 db = database()
 promises = []
 mods = ['108791316110923750592', '113117618922729693853']
-'''
-class promise:
-	def __init__(self, command, sender, cid):
-		self.cmd = command
-		self.snd = sender
-		self.cid = cid
-		t = threading.Timer(20.0, self.delete)
-		t.start()
-	def delete(self):
-		#should have unique cmd and snd
-		send(self.cid, 'deleted')
-		for i in range(0, len(promises)):
-			if (promises[i].snd == self.snd and promises[i].cmd == self.cmd and promises[i].cid == self.cid):
-				promises.pop(i)
-				return
-'''
-
-
 class handler:
 	def join(self, psmg, sender, cid): 
 		#create new char TODO: add confirmation
@@ -109,10 +91,11 @@ class handler:
 		player.biomeID = db.getIDofPos(player.pos, player.world)
 
 		send(cid, str(player.name) + ' travelled to ' + str(f_c))
-		send(cid, str(player.name) + "'s nutrition level is now " + str(player.hunger))
 
 		db.setPlayer(sender, np.concatenate((pcoords, newcoords)), 1)
 		db.setPlayer(sender, player, 0)
+
+		self.me(['!me'], sender, cid)
 	def gather(self, psmg, sender, cid):
 		playerExists(sender, cid)
 		from map.classes import biome
@@ -120,17 +103,29 @@ class handler:
 		from resources import generateResources, calculateLoot
 		player = db.getPlayer(sender, 0)
 		p_biome = db.getBiomeByID(player.biomeID, player.world)
-		if (int(psmg[1]) > 1440):
+		time = int(psmg[1])
+		if (time > 1440):
 			send(cid, 'You can only gather resources for up to 1 day (1440 minutes).')
 			return
-		if (type(p_biome.resources) == type(-1)):
+		if (player.hunger <= time):
+			send(cid, "You don't have enough nutrition to gather for that long.")
+			return
+		if (type(p_biome.resources) == int):
 			p_biome = generateResources(p_biome)
-		time_taken, player.inventory, p_biome = calculateLoot(p_biome, psmg[1], 'damascus blade', player.inventory)
+		time_taken, player.inventory, p_biome = calculateLoot(p_biome, time, 'damascus blade', player.inventory)
 		db.updateBiomeByID(player.biomeID, player.world, p_biome)
 		if (time_taken != -1):
 			send(cid, 'Your inventory filled up at ' + str(time_taken) + ' minutes.')
+			player.hunger -= time_taken
+		else:
+			player.hunger -= time
 		db.setPlayer(sender, player, 0)
+
+
+		self.me(['!me'], sender, cid)
+
 		send(cid, 'You got items, check your inventory (placeholder until i add shit)')
+
 	def eat(self, psmg, sender, cid):
 		playerExists(sender, cid)
 		#5's to be replaced by nutrition_value from attr
@@ -155,6 +150,59 @@ class handler:
 			db.setPlayer(sender, player, 0)
 		else:
 			send(cid, 'That is not a food item!')
+
+	def craft(self, psmg, sender, cid):
+		playerExists(sender, cid)
+
+		if (len(psmg) == 1):
+			send(cid, 'Please specify an item to craft!')
+			return
+
+		count = -1
+		item_name = ''
+		for i in range(1, len(psmg)):
+			if (psmg[i].isdigit()):
+				count = psmg[i]
+				break
+			else:
+				item_name = item_name + " " + psmg[i]
+
+		item_name = item_name.lower().title().strip()
+
+		if (count == -1):
+			count = 1
+
+		import json
+
+		with open('items/ItemNameMap.json') as item:
+			item = json.load(item).get(item_name)
+		if (item == None):
+			send(cid, 'Invalid item name.')
+			return
+		else:
+			from items.craft import craft
+			player = db.getPlayer(sender, 0)
+			status, e = craft(item['cat'], item['id'], count, player)
+
+		if (status == 1):
+			player = e
+			send(cid, "You successfully crafted " + str(count) + " " + item_name + ".")
+			db.setPlayer(sender, player, 0)
+			self.me(['!me'], sender, cid)
+			return
+		if (status == -1):
+			send(cid, "you don't have enough nutrition")
+			return
+		if (status == -2):
+			send(cid, "invalid item!")
+			return
+		if (status == -3):
+			sendRaw(cid, e.tolist())
+			return
+		if (status == -4):
+			send(cid, "your inventory doesn't have enough space!")
+			return
+
 	def pos(self, psmg, sender, cid):
 		playerExists(sender, cid)
 		from draw_map import draw_pos
@@ -171,6 +219,7 @@ class handler:
 			send(cid, 'Biome resources reset successfully.')
 		else:
 			send(cid, 'You do not have permission to execute this command.')
+
 	def resetinv(self, psmg, sender, cid):
 		playerExists(sender, cid)
 		from items.item_classes import Container
@@ -178,6 +227,7 @@ class handler:
 		player.inventory = Container(player.name + "'s inventory", 15)
 		db.setPlayer(sender, player, 0)
 		send(cid, 'Your inventory has been reset.')
+
 	def me(self, psmg, sender, cid):
 		playerExists(sender, cid)
 		from items.item_classes import Container
@@ -199,6 +249,7 @@ class handler:
 				),
 			axis=0)
 			sendRaw(cid, m.tolist())
+
 	def maxstats(self, psmg, sender, cid):
 		playerExists(sender, cid)
 		player = db.getPlayer(sender, 0)
@@ -217,6 +268,8 @@ class handler:
 
 	def pig(self, psmg, sender, cid):
 		send(cid, 'oink')
+	def ping(self, psmg, sender, cid):
+		send(cid, 'pong')
 	def help(self, psmg, sender, cid):
 		import json
 		if (len(psmg) == 1):
@@ -224,8 +277,6 @@ class handler:
 		with open('help.json') as help_json:
 			help_json = json.load(help_json)
 		sendRaw(cid, help_json.get(psmg[1], [[0, "That isn't a valid category! Try 'l', 'w', 'i' or 'a'."]]))
-
-
 
 def send(cid, message):
 	time.sleep(0.01) #prevent it from breaking
@@ -257,11 +308,14 @@ def toBar(name, val, max_val, bold_threshold):
 
 def playerExists(sender, cid):
 	if db.isPlayer(sender):
+		if (cid == -1):
+			return 1
 		return
 	else:
+		if (cid == -1):
+			return 0
 		send(cid, "You haven't created a player yet! Do !join <playername> <world>")
 		exit()
-
 try:
 	cid = sys.argv[1]
 	sender = sys.argv[2]
@@ -270,10 +324,13 @@ try:
 except:
 	cid = "[CHAT]"
 	sender = "108791316110923750592"
-	msg = input('message: ')
-	if (msg == ''):
-		msg = "!map"
+	msg = input('message: ')	
 	psmg = msg.split(' ')
 
 handler = handler()
 getattr(handler, psmg[0].split('!')[1].lower())(psmg, sender, cid)
+if playerExists(sender, -1):
+	player = db.getPlayer(sender, 0)
+	if (player.hunger <= 0 or player.thirst <= 0 or player.health <= 0):
+		db.removePlayer(sender)
+		send(cid, 'You died. Your player has been removed from the game.')

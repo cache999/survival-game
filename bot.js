@@ -54,17 +54,14 @@ client.on('chat_message', function(ev) {
           console.log(JSON.parse(send[2]))
           client.sendchatmessage(send[1], JSON.parse(send[2]))
         }
-        
       });
-
-    
   }
 });
 
 // connect and post a message.
 // the id is a conversation id.
 client.connect(creds).then(function() {
-    return client.sendchatmessage('UgwL1fuCnZlZEBsOLBl4AaABAagB58n9DA', [[0, 'Hello World█']]);
+    return client.sendchatmessage('UgwL1fuCnZlZEBsOLBl4AaABAagB58n9DA', [["0", 'Hello World█']]);
 }).done();
 
 /* 

@@ -4,8 +4,6 @@ Categories:
  - Wood
  - Vegetation
  - Food
- - 
-
 '''
 class Item:
 	def __init__(self, cat, id_, count, attributes):
@@ -30,13 +28,22 @@ class Item:
 			self.attr['stack'] = 99
 	#def __str__(self):
 	#	return 'fuk'
-	def __eq__(self, other):
+	def __eq__(self, other): #reserved for np.argwhere
+		if (other.eq_type == 'soft'):
+			return self.cat == other.cat and self.id == other.id #item equals request, attributes dont need to match
+		if (other.eq_type == 'hard'):
+			return self.cat == other.cat and self.id == other.id and self.attr == other.attr #item matches request exactly
+
+	def exact_match(self, other):
 		return (self.cat == other.cat and self.id == other.id and self.attr == other.attr)
+
 	def __bool__(self):
 		#checks if the item is empty
 		return not(self.cat == "Nothing")
 	def __getitem__(self, key):
 		return self.attr.get(key)
+	def __hash__(self): #do i look like i know what i'm doing?
+		return hash((self.cat, self.id))
 
 class Container:
 	def __init__(self, name, slots):
@@ -47,7 +54,7 @@ class Container:
 		#appends what it can to its own slots.
 		#returns 0 if all were accepted, or the item if there was something left over.
 		for i in range(0, self.slots):
-			if ((item == self[i] and self[i].count < self[i].attr['stack']) or not(bool(self[i]))):
+			if ((item.exact_match(self[i]) and self[i].count < self[i].attr['stack']) or not(bool(self[i]))):
 				if (item.count == 0):
 					break
 				self[i], item = self.appendToStack(self[i], item)
@@ -105,6 +112,8 @@ class Container:
 	def getCat(self, index):
 		return self[index].cat
 
+	def getCondensedView():
+		return
 	#i have no idea but these are
 	def __getitem__(self, key):
 		return self.items[key]
@@ -121,5 +130,6 @@ Container1
 if __name__ == "__main__":
 	cont1 = Container('benzou', 5)
 	cont1 + Item('Wood', 1, 6, -1)
+	cont1 + Item('Plants', 1, 6, -1)
 	print('added')
 	print(cont1)

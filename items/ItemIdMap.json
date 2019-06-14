@@ -2,15 +2,23 @@
 	"Nothing": {
 		"1": "Nothing"
 	},
+	"Tools": {
+		"1": "Flint Axe"
+	},
 	"Raw Materials": {
 		"1": "Sand",
 		"2": "Peat",
 		"3": "Ice",
-		"4": "Snow"
+		"4": "Snow",
+		"5": "Sedimentary rock"
+	},
+	"Organic Materials": {
+		"1": "Twine"
 	},
 	"Minerals": {
 		"1": "Lignite",
-		"2": "Diamond"
+		"2": "Diamond",
+		"3": "Flint"
 	},
 	"Wood": {
 		"1": "Log",

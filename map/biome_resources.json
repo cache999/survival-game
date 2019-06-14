@@ -102,7 +102,17 @@
 
 "8": [
 	{"info": ["Raw Materials", 1, 1, -1],
-	"weight": 49,
+	"weight": 40,
+	"max": 999
+	},
+
+	{"info": ["Raw Materials", 5, 1, -1],
+	"weight": 5,
+	"max": 999
+	},
+
+	{"info": ["Minerals", 3, 1, -1],
+	"weight": 4,
 	"max": 999
 	},
 

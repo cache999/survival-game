@@ -1,0 +1,14 @@
+{
+	"Organic Materials, 1": {
+		"requirements": [["Plants", 1, 4, -2]],
+		"hunger": 0,
+		"time-taken": 5,
+		"time-type": "crafting"
+	},
+	"Tools, 1": {
+		"requirements": [["Wood", 2, 1, -2], ["Wood", 3, 2, -2], ["Organic Materials", 1, 2, -2], ["Minerals", 3, 1, -2]],
+		"hunger": 2,
+		"time-taken": 5,
+		"time-type": "crafting"
+	}
+}
