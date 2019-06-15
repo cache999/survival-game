@@ -60,7 +60,7 @@ def craft(cat, id_, amount, player):
 
 	recipe = recipe.get('requirements')
 	#make reqs an array of ItemReq objects, init missing and req_idx
-	reqs = list(map(lambda x: ItemReq(x[0], x[1], x[2] * amount, x[3]), recipe))
+	reqs = list(map(lambda x: ItemReq(x[0], x[1], int(x[2]) * int(amount), x[3]), recipe))
 	reql = len(reqs)
 	missing = np.zeros(reql)
 	req_idx = []
@@ -77,6 +77,8 @@ def craft(cat, id_, amount, player):
 			deduct = min(int(inv[j]['stack']), int(inv[j].count), needed)
 			needed -= deduct
 			inv[j].count -= deduct
+			if inv[j].count == 0:
+				inv[j] = Item("Nothing", 1, 0, -1)
 			if (needed == 0):
 				break
 		if (needed != 0):
@@ -89,11 +91,12 @@ def craft(cat, id_, amount, player):
 		names = np.zeros((reql, 2), dtype=object)
 
 		names = np.array(func(indices, item_counts))
-		names = names.T
+		names = names.reshape((names.shape[0], names.shape[2])).T
 		#names = func(indices, item_counts)
-		linebreaks = np.vstack((np.full(reql, 1, dtype=object), np.full(reql, '\n'))).T
+		linebreaks = np.vstack((np.full(names.shape[0], 1, dtype=object), np.full(names.shape[0], '\n'))).T
 
-		message = np.zeros((reql * 2, 2), dtype=object)
+		message = np.zeros((names.shape[0] * 2, 2), dtype=object)
+
 		message[::2] = names
 		message[1::2] = linebreaks
 		message = np.insert(message, 0, [1, '\n'], axis=0)
@@ -107,21 +110,24 @@ def craft(cat, id_, amount, player):
 			return -4, -1
 		player.inventory = inv
 		return 1, player
-if __name__ == "__main__":
-	c = char('idot', 'benzou')
-	c.inventory + Item('Wood', 1, 1, -1)
-	c.inventory + Item('Plants', 1, 12, -1)
-	status, e = craft('Organic Materials', 1, 3, c)
-	if (status == 1):
-		c = e
-	if (status == -1):
-		print("you don't have enough nutrition")
-	if (status == -2):
-		print("invalid item!")
-	if (status == -3):
-		print("you don't have enough materials!")
-		print(e.tolist())
-	if (status == -4):
-		print("your inventory doesn't have enough space!")
-	#print(c.inventory)
-	print(c.hunger)
+'''
+c = char('idot', 'benzou')
+c.inventory + Item('Wood', 2, 1, -1)
+c.inventory + Item('Wood', 3, 2, -1)
+c.inventory + Item('Organic Materials', 1, 2, -1)
+c.inventory + Item('Minerals', 3, 1, -1)
+
+status, e = craft('Tools', 1, 1, c)
+if (status == 1):
+	c = e
+if (status == -1):
+	print("you don't have enough nutrition")
+if (status == -2):
+	print("invalid item!")
+if (status == -3):
+	print("you don't have enough materials!")
+	print(e.tolist())
+if (status == -4):
+	print("your inventory doesn't have enough space!")
+print(c.inventory)
+'''

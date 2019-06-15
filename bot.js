@@ -51,7 +51,6 @@ client.on('chat_message', function(ev) {
           getid(send[1], send[2], send[3])
         }
         if (send[0] === '^') {
-          console.log(JSON.parse(send[2]))
           client.sendchatmessage(send[1], JSON.parse(send[2]))
         }
       });

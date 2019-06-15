@@ -174,11 +174,7 @@ class handler:
 
 		import json
 
-		with open('items/ItemNameMap.json') as item:
-			item = json.load(item).get(item_name)
-		if (item == None):
-			send(cid, 'Invalid item name.')
-			return
+		item = getItem(cid, item_name)
 		else:
 			from items.craft import craft
 			player = db.getPlayer(sender, 0)
@@ -291,6 +287,12 @@ def sendRaw(cid, message):
 	time.sleep(0.01)
 	print('^|' + str(cid) + '|' + json.dumps(message)) #keep
 	sys.stdout.flush()
+def getItem(item_name, cid):
+	with open('items/ItemNameMap.json') as item:
+		item = json.load(item).get(item_name)
+	if (item == None):
+		send(cid, 'Invalid item name.')
+	return item
 
 def toBar(name, val, max_val, bold_threshold):
 	import math
